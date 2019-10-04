@@ -14,7 +14,7 @@ const Letters = () => {
   return (
     <>
       <h2>Letters</h2>
-      <ul>{getLetters()}</ul>
+      <div>{getLetters()}</div>
     </>
   )
 }

@@ -8,7 +8,7 @@ const Letter = ({ letter }) => {
   const [selected, setSelected] = useState(false)
   const [rejected, setRejected] = useState(false)
 
-  const SubComponent = selected ? SelectedLi : rejected ? RejectedLi : Li
+  const SubComponent = selected ? SelectedP : rejected ? RejectedP : P
 
   function toggleMenu() {
     setShowMenu(!showMenu)
@@ -50,16 +50,16 @@ Letter.propTypes = {
 
 export { Letter }
 
-const Li = styled('li')`
+const P = styled('p')`
   color: black;
 `
 
-const RejectedLi = styled('li')`
+const RejectedP = styled('p')`
   color: red;
   text-decoration: line-through;
 `
 
-const SelectedLi = styled('li')`
+const SelectedP = styled('p')`
   color: green;
   font-weight: bold;
 `
