@@ -131,3 +131,23 @@ test('calls add guess with correct guess format on submit', () => {
   }
   expect(addGuess).toHaveBeenCalledWith(expectedPayload)
 })
+
+test('letters is auto-populated and not editable if autocomplete is set to true', () => {
+  const { getByPlaceholderText, getByTestId } = render(
+    <UserInput addGuess={jest.fn()} autocomplete myWord='word' />,
+  )
+
+  expect(getByTestId('letters_input')).toBeDisabled()
+
+  userEvent.type(getByPlaceholderText('Enter word...'), 'wins')
+  expect(getByTestId('letters_input').value).toEqual('1')
+
+  userEvent.type(getByPlaceholderText('Enter word...'), 'wars')
+  expect(getByTestId('letters_input').value).toEqual('2')
+
+  userEvent.type(getByPlaceholderText('Enter word...'), 'ward')
+  expect(getByTestId('letters_input').value).toEqual('3')
+
+  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
+  expect(getByTestId('letters_input').value).toEqual('4')
+})

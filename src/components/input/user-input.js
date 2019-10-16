@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { hasDuplicates, checkLength } from './validation'
 
-const UserInput = ({ addGuess }) => {
+const UserInput = ({ addGuess, autocomplete, myWord }) => {
   const [word, setWord] = useState('')
   const [letters, setLetters] = useState(0)
   const [warning, setWarning] = useState('')
@@ -13,6 +13,10 @@ const UserInput = ({ addGuess }) => {
 
     setWord(newWord)
     setWarning(getWarning(newWord, letters))
+
+    if (autocomplete && myWord) {
+      setLetters(lettersInCommon(newWord, myWord))
+    }
   }
 
   const updateLetters = event => {
@@ -20,6 +24,15 @@ const UserInput = ({ addGuess }) => {
 
     setLetters(newLetters)
     setWarning(getWarning(word, newLetters))
+  }
+
+  function lettersInCommon(word1, word2) {
+    return [...word1].reduce((total, letter) => {
+      if (word2.includes(letter)) {
+        total++
+      }
+      return total
+    }, 0)
   }
 
   function getWarning(word, letters) {
@@ -42,37 +55,42 @@ const UserInput = ({ addGuess }) => {
     return ''
   }
 
-  function onSubmit() {
+  function onSubmit(event) {
     const payload = {
       word: word,
       letters: parseInt(letters),
     }
     addGuess(payload)
+
+    event.preventDefault()
   }
 
   return (
     <div>
-      <div>
+      <form onSubmit={onSubmit}>
         <input
           placeholder='Enter word...'
           type='text'
           onChange={updateWord}
           value={word}
+          aria-label='Enter guess here'
         />
         <input
           data-testid='letters_input'
           type='number'
           onChange={updateLetters}
           value={letters}
+          disabled={autocomplete && myWord}
+          aria-label='Number of letters in common'
         />
-        <button
+        <input
+          type='submit'
+          value='✓'
           data-testid='submit_button'
           disabled={!word || !!warning}
-          onClick={onSubmit}
-        >
-          ✓
-        </button>
-      </div>
+          aria-label='Submit guess'
+        />
+      </form>
       {warning && <p>{warning}</p>}
     </div>
   )
@@ -87,6 +105,8 @@ const WARNINGS = {
 
 UserInput.propTypes = {
   addGuess: PropTypes.func.isRequired,
+  autocomplete: PropTypes.bool,
+  myWord: PropTypes.string,
 }
 
 export { UserInput }
