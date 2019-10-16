@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Letters } from './letters/letters'
+import { UserInput } from './input/user-input'
 
-const App = () => <Letters />
+const App = () => <UserInput />
 
 export { App }

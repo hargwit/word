@@ -1,0 +1,103 @@
+import React from 'react'
+
+import { render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+
+import { UserInput } from './user-input'
+
+test('shows placeholder text and disabled submit button when no word is entered', () => {
+  const { getByPlaceholderText, getByTestId } = render(<UserInput />)
+
+  expect(getByPlaceholderText('Enter word...')).toBeInTheDocument()
+  expect(getByTestId('letters_input')).toBeInTheDocument()
+  expect(getByTestId('submit_button')).toBeInTheDocument()
+  expect(getByTestId('submit_button')).toBeDisabled()
+
+  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
+
+  expect(getByTestId('submit_button')).toBeEnabled()
+})
+
+test('shows warning when word not long enough', () => {
+  const { getByPlaceholderText, getByText, queryByText } = render(<UserInput />)
+
+  userEvent.type(getByPlaceholderText('Enter word...'), 'wor')
+
+  expect(getByText('Too short')).toBeInTheDocument()
+
+  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
+
+  expect(queryByText('Too short')).toBeNull()
+})
+
+test('shows warning when word too long', () => {
+  const { getByPlaceholderText, getByText, queryByText } = render(<UserInput />)
+
+  userEvent.type(getByPlaceholderText('Enter word...'), 'words')
+
+  expect(getByText('Too long')).toBeInTheDocument()
+
+  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
+
+  expect(queryByText('Too long')).toBeNull()
+})
+
+test('shows warning when duplicates present', () => {
+  const { getByPlaceholderText, getByText, queryByText } = render(<UserInput />)
+
+  userEvent.type(getByPlaceholderText('Enter word...'), 'wood')
+
+  expect(getByText('No duplicates')).toBeInTheDocument()
+
+  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
+
+  expect(queryByText('No duplicates')).toBeNull()
+})
+
+test('disables button when warning is present', () => {
+  const { getByPlaceholderText, getByText, getByTestId } = render(<UserInput />)
+
+  userEvent.type(getByPlaceholderText('Enter word...'), 'wood')
+
+  expect(getByText('No duplicates')).toBeInTheDocument()
+  expect(getByTestId('submit_button')).toBeDisabled()
+
+  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
+  expect(getByTestId('submit_button')).toBeEnabled()
+})
+
+test('user can only enter numbers between 0 and 4', () => {
+  const { getByPlaceholderText, getByText, getByTestId, queryByText } = render(
+    <UserInput />,
+  )
+
+  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
+
+  userEvent.type(getByTestId('letters_input'), '-1')
+  expect(getByText('Must be between 0-4')).toBeInTheDocument()
+  expect(getByTestId('submit_button')).toBeDisabled()
+
+  userEvent.type(getByTestId('letters_input'), '0')
+  expect(queryByText('Must be between 0-4')).toBeNull()
+  expect(getByTestId('submit_button')).toBeEnabled()
+
+  userEvent.type(getByTestId('letters_input'), '1')
+  expect(queryByText('Must be between 0-4')).toBeNull()
+  expect(getByTestId('submit_button')).toBeEnabled()
+
+  userEvent.type(getByTestId('letters_input'), '2')
+  expect(queryByText('Must be between 0-4')).toBeNull()
+  expect(getByTestId('submit_button')).toBeEnabled()
+
+  userEvent.type(getByTestId('letters_input'), '3')
+  expect(queryByText('Must be between 0-4')).toBeNull()
+  expect(getByTestId('submit_button')).toBeEnabled()
+
+  userEvent.type(getByTestId('letters_input'), '4')
+  expect(queryByText('Must be between 0-4')).toBeNull()
+  expect(getByTestId('submit_button')).toBeEnabled()
+
+  userEvent.type(getByTestId('letters_input'), '5')
+  expect(getByText('Must be between 0-4')).toBeInTheDocument()
+  expect(getByTestId('submit_button')).toBeDisabled()
+})
