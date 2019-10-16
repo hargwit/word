@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 
 import { hasDuplicates, checkLength } from './validation'
 
-const UserInput = () => {
+const UserInput = ({ addGuess }) => {
   const [word, setWord] = useState('')
   const [letters, setLetters] = useState(0)
   const [warning, setWarning] = useState('')
@@ -41,6 +42,14 @@ const UserInput = () => {
     return ''
   }
 
+  function onSubmit() {
+    const payload = {
+      word: word,
+      letters: parseInt(letters),
+    }
+    addGuess(payload)
+  }
+
   return (
     <div>
       <div>
@@ -56,7 +65,11 @@ const UserInput = () => {
           onChange={updateLetters}
           value={letters}
         />
-        <button data-testid='submit_button' disabled={!word || !!warning}>
+        <button
+          data-testid='submit_button'
+          disabled={!word || !!warning}
+          onClick={onSubmit}
+        >
           ✓
         </button>
       </div>
@@ -70,6 +83,10 @@ const WARNINGS = {
   TOO_LONG: 'Too long',
   NO_DUPLICATES: 'No duplicates',
   LETTERS_SIZE: 'Must be between 0-4',
+}
+
+UserInput.propTypes = {
+  addGuess: PropTypes.func.isRequired,
 }
 
 export { UserInput }
