@@ -3,26 +3,35 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { UserInput } from './user-input'
+import { GuessInput } from './guess-input'
 
 test('shows placeholder text and disabled submit button when no word is entered', () => {
   const { getByPlaceholderText, getByTestId } = render(
-    <UserInput addGuess={jest.fn()} />,
+    <GuessInput addGuess={jest.fn()} />,
   )
 
   expect(getByPlaceholderText('Enter word...')).toBeInTheDocument()
   expect(getByTestId('letters_input')).toBeInTheDocument()
+  expect(getByTestId('letters_input')).toBeEnabled()
   expect(getByTestId('submit_button')).toBeInTheDocument()
+  expect(getByTestId('submit_button')).toBeDisabled()
+})
+
+test('disables button when word is invalid', () => {
+  const { getByPlaceholderText, getByTestId } = render(
+    <GuessInput addGuess={jest.fn()} />,
+  )
+
+  userEvent.type(getByPlaceholderText('Enter word...'), 'wood')
   expect(getByTestId('submit_button')).toBeDisabled()
 
   userEvent.type(getByPlaceholderText('Enter word...'), 'word')
-
   expect(getByTestId('submit_button')).toBeEnabled()
 })
 
 test('shows warning when word not long enough', () => {
   const { getByPlaceholderText, getByText, queryByText } = render(
-    <UserInput addGuess={jest.fn()} />,
+    <GuessInput addGuess={jest.fn()} />,
   )
 
   userEvent.type(getByPlaceholderText('Enter word...'), 'wor')
@@ -36,7 +45,7 @@ test('shows warning when word not long enough', () => {
 
 test('shows warning when word too long', () => {
   const { getByPlaceholderText, getByText, queryByText } = render(
-    <UserInput addGuess={jest.fn()} />,
+    <GuessInput addGuess={jest.fn()} />,
   )
 
   userEvent.type(getByPlaceholderText('Enter word...'), 'words')
@@ -50,7 +59,7 @@ test('shows warning when word too long', () => {
 
 test('shows warning when duplicates present', () => {
   const { getByPlaceholderText, getByText, queryByText } = render(
-    <UserInput addGuess={jest.fn()} />,
+    <GuessInput addGuess={jest.fn()} />,
   )
 
   userEvent.type(getByPlaceholderText('Enter word...'), 'wood')
@@ -62,23 +71,9 @@ test('shows warning when duplicates present', () => {
   expect(queryByText('No duplicates')).toBeNull()
 })
 
-test('disables button when warning is present', () => {
-  const { getByPlaceholderText, getByText, getByTestId } = render(
-    <UserInput addGuess={jest.fn()} />,
-  )
-
-  userEvent.type(getByPlaceholderText('Enter word...'), 'wood')
-
-  expect(getByText('No duplicates')).toBeInTheDocument()
-  expect(getByTestId('submit_button')).toBeDisabled()
-
-  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
-  expect(getByTestId('submit_button')).toBeEnabled()
-})
-
 test('user can only enter numbers between 0 and 4', () => {
   const { getByPlaceholderText, getByText, getByTestId, queryByText } = render(
-    <UserInput addGuess={jest.fn()} />,
+    <GuessInput addGuess={jest.fn()} />,
   )
 
   userEvent.type(getByPlaceholderText('Enter word...'), 'word')
@@ -116,7 +111,7 @@ test('calls add guess with correct guess format on submit', () => {
   const addGuess = jest.fn()
 
   const { getByPlaceholderText, getByTestId } = render(
-    <UserInput addGuess={addGuess} />,
+    <GuessInput addGuess={addGuess} />,
   )
 
   userEvent.type(getByPlaceholderText('Enter word...'), 'word')
@@ -134,7 +129,7 @@ test('calls add guess with correct guess format on submit', () => {
 
 test('letters is auto-populated and not editable if autocomplete is set to true', () => {
   const { getByPlaceholderText, getByTestId } = render(
-    <UserInput addGuess={jest.fn()} autocomplete myWord='word' />,
+    <GuessInput addGuess={jest.fn()} autocomplete myWord='word' />,
   )
 
   expect(getByTestId('letters_input')).toBeDisabled()

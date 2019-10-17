@@ -1,18 +1,16 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { hasDuplicates, checkLength } from './validation'
+import { ValidatedInput } from '../validated-input/validated-input'
+import { WARNINGS } from '../constants'
 
-const UserInput = ({ addGuess, autocomplete, myWord }) => {
+const GuessInput = ({ addGuess, autocomplete, myWord }) => {
   const [word, setWord] = useState('')
-  const [letters, setLetters] = useState(0)
   const [warning, setWarning] = useState('')
+  const [letters, setLetters] = useState(0)
 
-  const updateWord = event => {
-    const newWord = event.target.value
-
+  const setGuess = newWord => {
     setWord(newWord)
-    setWarning(getWarning(newWord, letters))
 
     if (autocomplete && myWord) {
       setLetters(lettersInCommon(newWord, myWord))
@@ -21,9 +19,15 @@ const UserInput = ({ addGuess, autocomplete, myWord }) => {
 
   const updateLetters = event => {
     const newLetters = event.target.value
-
     setLetters(newLetters)
-    setWarning(getWarning(word, newLetters))
+    setWarning(getWarning(newLetters))
+  }
+
+  function getWarning(letters) {
+    if (letters < 0 || letters > 4) {
+      return WARNINGS.LETTERS_SIZE
+    }
+    return warning
   }
 
   function lettersInCommon(word1, word2) {
@@ -33,26 +37,6 @@ const UserInput = ({ addGuess, autocomplete, myWord }) => {
       }
       return total
     }, 0)
-  }
-
-  function getWarning(word, letters) {
-    if (!word) {
-      return ''
-    }
-    if (checkLength(word) === -1) {
-      return WARNINGS.TOO_SHORT
-    }
-    if (checkLength(word) === 1) {
-      return WARNINGS.TOO_LONG
-    }
-    if (hasDuplicates(word)) {
-      return WARNINGS.NO_DUPLICATES
-    }
-    if (letters < 0 || letters > 4) {
-      return WARNINGS.LETTERS_SIZE
-    }
-
-    return ''
   }
 
   function onSubmit(event) {
@@ -68,13 +52,7 @@ const UserInput = ({ addGuess, autocomplete, myWord }) => {
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <input
-          placeholder='Enter word...'
-          type='text'
-          onChange={updateWord}
-          value={word}
-          aria-label='Enter guess here'
-        />
+        <ValidatedInput setWarning={setWarning} setGuess={setGuess} />
         <input
           data-testid='letters_input'
           type='number'
@@ -96,17 +74,10 @@ const UserInput = ({ addGuess, autocomplete, myWord }) => {
   )
 }
 
-const WARNINGS = {
-  TOO_SHORT: 'Too short',
-  TOO_LONG: 'Too long',
-  NO_DUPLICATES: 'No duplicates',
-  LETTERS_SIZE: 'Must be between 0-4',
-}
-
-UserInput.propTypes = {
+GuessInput.propTypes = {
   addGuess: PropTypes.func.isRequired,
   autocomplete: PropTypes.bool,
   myWord: PropTypes.string,
 }
 
-export { UserInput }
+export { GuessInput }
