@@ -1,18 +1,26 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { hasDuplicates, checkLength } from './validation'
+import {
+  hasDuplicates,
+  checkLength,
+  anyWarning,
+  addWarning,
+  removeWarning,
+} from './validation'
+
+import { WARNINGS } from './constants'
 
 const UserInput = ({ addGuess, autocomplete, myWord }) => {
   const [word, setWord] = useState('')
   const [letters, setLetters] = useState(0)
-  const [warning, setWarning] = useState('')
+  const [warnings, setWarnings] = useState([])
 
   const updateWord = event => {
     const newWord = event.target.value
 
     setWord(newWord)
-    setWarning(getWarning(newWord, letters))
+    handleWarnings(newWord, letters)
 
     if (autocomplete && myWord) {
       setLetters(lettersInCommon(newWord, myWord))
@@ -23,7 +31,7 @@ const UserInput = ({ addGuess, autocomplete, myWord }) => {
     const newLetters = event.target.value
 
     setLetters(newLetters)
-    setWarning(getWarning(word, newLetters))
+    handleWarnings(word, newLetters)
   }
 
   function lettersInCommon(word1, word2) {
@@ -35,24 +43,34 @@ const UserInput = ({ addGuess, autocomplete, myWord }) => {
     }, 0)
   }
 
-  function getWarning(word, letters) {
-    if (!word) {
-      return ''
-    }
+  function handleWarnings(word, letters) {
+    let newWarnings = [...warnings]
+
     if (checkLength(word) === -1) {
-      return WARNINGS.TOO_SHORT
-    }
-    if (checkLength(word) === 1) {
-      return WARNINGS.TOO_LONG
-    }
-    if (hasDuplicates(word)) {
-      return WARNINGS.NO_DUPLICATES
-    }
-    if (letters < 0 || letters > 4) {
-      return WARNINGS.LETTERS_SIZE
+      newWarnings = addWarning(newWarnings, WARNINGS.TOO_SHORT)
+    } else {
+      newWarnings = removeWarning(newWarnings, WARNINGS.TOO_SHORT)
     }
 
-    return ''
+    if (checkLength(word) === 1) {
+      newWarnings = addWarning(newWarnings, WARNINGS.TOO_LONG)
+    } else {
+      newWarnings = removeWarning(newWarnings, WARNINGS.TOO_LONG)
+    }
+
+    if (hasDuplicates(word)) {
+      newWarnings = addWarning(newWarnings, WARNINGS.NO_DUPLICATES)
+    } else {
+      newWarnings = removeWarning(newWarnings, WARNINGS.NO_DUPLICATES)
+    }
+
+    if (letters < 0 || letters > 4) {
+      newWarnings = addWarning(newWarnings, WARNINGS.LETTERS_SIZE)
+    } else {
+      newWarnings = removeWarning(newWarnings, WARNINGS.LETTERS_SIZE)
+    }
+
+    setWarnings(newWarnings)
   }
 
   function onSubmit(event) {
@@ -87,20 +105,14 @@ const UserInput = ({ addGuess, autocomplete, myWord }) => {
           type='submit'
           value='✓'
           data-testid='submit_button'
-          disabled={!word || !!warning}
+          disabled={!word || anyWarning(warnings)}
           aria-label='Submit guess'
         />
       </form>
-      {warning && <p>{warning}</p>}
+      {anyWarning(warnings) &&
+        warnings.map((warning, index) => <p key={index}>{warning}</p>)}
     </div>
   )
-}
-
-const WARNINGS = {
-  TOO_SHORT: 'Too short',
-  TOO_LONG: 'Too long',
-  NO_DUPLICATES: 'No duplicates',
-  LETTERS_SIZE: 'Must be between 0-4',
 }
 
 UserInput.propTypes = {
