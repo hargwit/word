@@ -15,4 +15,19 @@ function checkLength(word) {
   return 0
 }
 
-export { hasDuplicates, checkLength }
+function addWarning(warnings, warning) {
+  if (!warnings.includes(warning)) {
+    return [...warnings, warning]
+  }
+  return [...warnings]
+}
+
+function removeWarning(warnings, warning) {
+  return warnings.filter(w => w !== warning)
+}
+
+function anyWarning(warnings) {
+  return warnings.length > 0
+}
+
+export { hasDuplicates, checkLength, addWarning, removeWarning, anyWarning }

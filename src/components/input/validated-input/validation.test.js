@@ -1,4 +1,51 @@
-import { hasDuplicates, checkLength } from './validation'
+import {
+  hasDuplicates,
+  checkLength,
+  addWarning,
+  removeWarning,
+  anyWarning,
+} from './validation'
+
+import { WARNINGS } from '../constants'
+
+test('add warning returns the passed list plus the warning', () => {
+  let expected = [WARNINGS.TOO_LONG, WARNINGS.TOO_SHORT]
+  let actual = addWarning([WARNINGS.TOO_LONG], WARNINGS.TOO_SHORT)
+
+  expect(actual).toEqual(expected)
+
+  expected = [WARNINGS.TOO_SHORT]
+  actual = addWarning([WARNINGS.TOO_SHORT], WARNINGS.TOO_SHORT)
+
+  expect(actual).toEqual(expected)
+})
+
+test('remove warning returns passed list without the warning', () => {
+  let expected = [WARNINGS.TOO_LONG]
+  let actual = removeWarning(
+    [WARNINGS.TOO_LONG, WARNINGS.TOO_SHORT],
+    WARNINGS.TOO_SHORT,
+  )
+
+  expect(actual).toEqual(expected)
+
+  expected = [WARNINGS.TOO_LONG]
+  actual = removeWarning([WARNINGS.TOO_LONG], WARNINGS.TOO_SHORT)
+
+  expect(actual).toEqual(expected)
+})
+
+test('any warning returns true if there is a warning, false if not', () => {
+  let expected = true
+  let actual = anyWarning([WARNINGS.TOO_SHORT])
+
+  expect(actual).toBe(expected)
+
+  expected = false
+  actual = anyWarning([])
+
+  expect(actual).toBe(expected)
+})
 
 test('hasDuplicates returns true if there is a duplicate', () => {
   const expected = true
