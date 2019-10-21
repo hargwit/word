@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { GuessInput } from './input/guess-input/guess-input'
+import { UserInput } from './input/user-input'
 
-const App = () => <GuessInput />
+const App = () => <UserInput />
 
 export { App }
