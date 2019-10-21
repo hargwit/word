@@ -6,7 +6,7 @@ import {
   anyWarning,
 } from './validation'
 
-import { WARNINGS } from '../constants'
+import { WARNINGS } from './constants'
 
 test('add warning returns the passed list plus the warning', () => {
   let expected = [WARNINGS.TOO_LONG, WARNINGS.TOO_SHORT]
