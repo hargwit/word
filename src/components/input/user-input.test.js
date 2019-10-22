@@ -169,6 +169,6 @@ test('displays warning passed in as a prop', () => {
     />,
   )
 
-  expect(getByText('A parent warning')).toBeInTheDocument()
+  expect(getByText('A different parent warning')).toBeInTheDocument()
   expect(getByText('Too short')).toBeInTheDocument()
 })
