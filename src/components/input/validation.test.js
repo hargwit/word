@@ -4,9 +4,22 @@ import {
   addWarning,
   removeWarning,
   anyWarning,
+  includesWarning,
 } from './validation'
 
 import { WARNINGS } from './constants'
+
+test('includes warning returns true if warning included, false if not', () => {
+  let expected = false
+  let actual = includesWarning([], WARNINGS.TOO_SHORT)
+
+  expect(actual).toBe(expected)
+
+  expected = true
+  actual = includesWarning([WARNINGS.TOO_SHORT], WARNINGS.TOO_SHORT)
+
+  expect(actual).toBe(expected)
+})
 
 test('add warning returns the passed list plus the warning', () => {
   let expected = [WARNINGS.TOO_LONG, WARNINGS.TOO_SHORT]

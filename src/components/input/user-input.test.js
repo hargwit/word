@@ -151,3 +151,24 @@ test('letters is auto-populated and not editable if autocomplete is set to true'
   userEvent.type(getByPlaceholderText('Enter word...'), 'word')
   expect(getByTestId('letters_input').value).toEqual('4')
 })
+
+test('displays warning passed in as a prop', () => {
+  const { getByText, getByPlaceholderText, rerender } = render(
+    <UserInput addGuess={jest.fn()} parentWarning='A parent warning' />,
+  )
+
+  userEvent.type(getByPlaceholderText('Enter word...'), 'wo')
+
+  expect(getByText('A parent warning')).toBeInTheDocument()
+  expect(getByText('Too short')).toBeInTheDocument()
+
+  rerender(
+    <UserInput
+      addGuess={jest.fn()}
+      parentWarning='A different parent warning'
+    />,
+  )
+
+  expect(getByText('A parent warning')).toBeInTheDocument()
+  expect(getByText('Too short')).toBeInTheDocument()
+})

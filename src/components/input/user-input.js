@@ -7,11 +7,12 @@ import {
   anyWarning,
   addWarning,
   removeWarning,
+  includesWarning,
 } from './validation'
 
 import { WARNINGS } from './constants'
 
-const UserInput = ({ addGuess, autocomplete, myWord }) => {
+const UserInput = ({ addGuess, autocomplete, myWord, parentWarning }) => {
   const [word, setWord] = useState('')
   const [letters, setLetters] = useState(0)
   const [warnings, setWarnings] = useState([])
@@ -20,7 +21,7 @@ const UserInput = ({ addGuess, autocomplete, myWord }) => {
     const newWord = event.target.value
 
     setWord(newWord)
-    handleWarnings(newWord, letters)
+    updateWarnings(newWord, letters)
 
     if (autocomplete && myWord) {
       setLetters(lettersInCommon(newWord, myWord))
@@ -31,20 +32,14 @@ const UserInput = ({ addGuess, autocomplete, myWord }) => {
     const newLetters = event.target.value
 
     setLetters(newLetters)
-    handleWarnings(word, newLetters)
+    updateWarnings(word, newLetters)
   }
 
-  function lettersInCommon(word1, word2) {
-    return [...word1].reduce((total, letter) => {
-      if (word2.includes(letter)) {
-        total++
-      }
-      return total
-    }, 0)
-  }
-
-  function handleWarnings(word, letters) {
+  function updateWarnings(word, letters) {
     let newWarnings = [...warnings]
+    if (parentWarning && !includesWarning(warnings, parentWarning)) {
+      newWarnings = addWarning(newWarnings, parentWarning)
+    }
 
     if (checkLength(word) === -1) {
       newWarnings = addWarning(newWarnings, WARNINGS.TOO_SHORT)
@@ -71,6 +66,15 @@ const UserInput = ({ addGuess, autocomplete, myWord }) => {
     }
 
     setWarnings(newWarnings)
+  }
+
+  function lettersInCommon(word1, word2) {
+    return [...word1].reduce((total, letter) => {
+      if (word2.includes(letter)) {
+        total++
+      }
+      return total
+    }, 0)
   }
 
   function onSubmit(event) {
@@ -119,6 +123,7 @@ UserInput.propTypes = {
   addGuess: PropTypes.func.isRequired,
   autocomplete: PropTypes.bool,
   myWord: PropTypes.string,
+  parentWarning: PropTypes.string,
 }
 
 export { UserInput }
