@@ -7,7 +7,6 @@ import {
   anyWarning,
   addWarning,
   removeWarning,
-  includesWarning,
 } from './validation'
 
 import { WARNINGS } from './constants'
@@ -15,7 +14,7 @@ import { WARNINGS } from './constants'
 const UserInput = ({ addGuess, autocomplete, myWord, parentWarning }) => {
   const [word, setWord] = useState('')
   const [letters, setLetters] = useState(0)
-  const [warnings, setWarnings] = useState([])
+  const [warnings, setWarnings] = useState(parentWarning ? [parentWarning] : [])
 
   const updateWord = event => {
     const newWord = event.target.value
@@ -37,9 +36,6 @@ const UserInput = ({ addGuess, autocomplete, myWord, parentWarning }) => {
 
   function updateWarnings(word, letters) {
     let newWarnings = [...warnings]
-    if (parentWarning && !includesWarning(warnings, parentWarning)) {
-      newWarnings = addWarning(newWarnings, parentWarning)
-    }
 
     if (checkLength(word) === -1) {
       newWarnings = addWarning(newWarnings, WARNINGS.TOO_SHORT)

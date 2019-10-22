@@ -30,15 +30,4 @@ function anyWarning(warnings) {
   return warnings.length > 0
 }
 
-function includesWarning(warnings, warning) {
-  return warnings.includes(warning)
-}
-
-export {
-  hasDuplicates,
-  checkLength,
-  addWarning,
-  removeWarning,
-  anyWarning,
-  includesWarning,
-}
+export { hasDuplicates, checkLength, addWarning, removeWarning, anyWarning }
