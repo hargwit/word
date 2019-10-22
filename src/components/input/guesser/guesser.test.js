@@ -3,11 +3,11 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { UserInput } from './user-input'
+import { Guesser } from './guesser'
 
 test('shows placeholder text and disabled submit button when no word is entered', () => {
   const { getByPlaceholderText, getByTestId } = render(
-    <UserInput addGuess={jest.fn()} />,
+    <Guesser addGuess={jest.fn()} />,
   )
 
   expect(getByPlaceholderText('Enter word...')).toBeInTheDocument()
@@ -20,51 +20,9 @@ test('shows placeholder text and disabled submit button when no word is entered'
   expect(getByTestId('submit_button')).toBeEnabled()
 })
 
-test('shows warning when word not long enough', () => {
-  const { getByPlaceholderText, getByText, queryByText } = render(
-    <UserInput addGuess={jest.fn()} />,
-  )
-
-  userEvent.type(getByPlaceholderText('Enter word...'), 'wor')
-
-  expect(getByText('Too short')).toBeInTheDocument()
-
-  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
-
-  expect(queryByText('Too short')).toBeNull()
-})
-
-test('shows warning when word too long', () => {
-  const { getByPlaceholderText, getByText, queryByText } = render(
-    <UserInput addGuess={jest.fn()} />,
-  )
-
-  userEvent.type(getByPlaceholderText('Enter word...'), 'words')
-
-  expect(getByText('Too long')).toBeInTheDocument()
-
-  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
-
-  expect(queryByText('Too long')).toBeNull()
-})
-
-test('shows warning when duplicates present', () => {
-  const { getByPlaceholderText, getByText, queryByText } = render(
-    <UserInput addGuess={jest.fn()} />,
-  )
-
-  userEvent.type(getByPlaceholderText('Enter word...'), 'wood')
-
-  expect(getByText('No duplicates')).toBeInTheDocument()
-
-  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
-
-  expect(queryByText('No duplicates')).toBeNull()
-})
-
 test('disables button when warning is present', () => {
   const { getByPlaceholderText, getByText, getByTestId } = render(
-    <UserInput addGuess={jest.fn()} />,
+    <Guesser addGuess={jest.fn()} />,
   )
 
   userEvent.type(getByPlaceholderText('Enter word...'), 'wood')
@@ -78,7 +36,7 @@ test('disables button when warning is present', () => {
 
 test('user can only enter numbers between 0 and 4', () => {
   const { getByPlaceholderText, getByText, getByTestId, queryByText } = render(
-    <UserInput addGuess={jest.fn()} />,
+    <Guesser addGuess={jest.fn()} />,
   )
 
   userEvent.type(getByPlaceholderText('Enter word...'), 'word')
@@ -116,7 +74,7 @@ test('calls add guess with correct guess format on submit', () => {
   const addGuess = jest.fn()
 
   const { getByPlaceholderText, getByTestId } = render(
-    <UserInput addGuess={addGuess} />,
+    <Guesser addGuess={addGuess} />,
   )
 
   userEvent.type(getByPlaceholderText('Enter word...'), 'word')
@@ -134,7 +92,7 @@ test('calls add guess with correct guess format on submit', () => {
 
 test('letters is auto-populated and not editable if autocomplete is set to true', () => {
   const { getByPlaceholderText, getByTestId } = render(
-    <UserInput addGuess={jest.fn()} autocomplete myWord='word' />,
+    <Guesser addGuess={jest.fn()} autocomplete myWord='word' />,
   )
 
   expect(getByTestId('letters_input')).toBeDisabled()
@@ -150,25 +108,4 @@ test('letters is auto-populated and not editable if autocomplete is set to true'
 
   userEvent.type(getByPlaceholderText('Enter word...'), 'word')
   expect(getByTestId('letters_input').value).toEqual('4')
-})
-
-test('displays warning passed in as a prop', () => {
-  const { getByText, getByPlaceholderText, rerender } = render(
-    <UserInput addGuess={jest.fn()} parentWarning='A parent warning' />,
-  )
-
-  userEvent.type(getByPlaceholderText('Enter word...'), 'wo')
-
-  expect(getByText('A parent warning')).toBeInTheDocument()
-  expect(getByText('Too short')).toBeInTheDocument()
-
-  rerender(
-    <UserInput
-      addGuess={jest.fn()}
-      parentWarning='A different parent warning'
-    />,
-  )
-
-  expect(getByText('A different parent warning')).toBeInTheDocument()
-  expect(getByText('Too short')).toBeInTheDocument()
 })

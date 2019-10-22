@@ -22,12 +22,8 @@ function addWarning(warnings, warning) {
   return [...warnings]
 }
 
-function removeWarning(warnings, warning) {
-  return warnings.filter(w => w !== warning)
-}
-
 function anyWarning(warnings) {
   return warnings.length > 0
 }
 
-export { hasDuplicates, checkLength, addWarning, removeWarning, anyWarning }
+export { hasDuplicates, checkLength, addWarning, anyWarning }

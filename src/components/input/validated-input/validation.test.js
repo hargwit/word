@@ -2,11 +2,10 @@ import {
   hasDuplicates,
   checkLength,
   addWarning,
-  removeWarning,
   anyWarning,
 } from './validation'
 
-import { WARNINGS } from './constants'
+import { WARNINGS } from '../constants'
 
 test('add warning returns the passed list plus the warning', () => {
   let expected = [WARNINGS.TOO_LONG, WARNINGS.TOO_SHORT]
@@ -16,21 +15,6 @@ test('add warning returns the passed list plus the warning', () => {
 
   expected = [WARNINGS.TOO_SHORT]
   actual = addWarning([WARNINGS.TOO_SHORT], WARNINGS.TOO_SHORT)
-
-  expect(actual).toEqual(expected)
-})
-
-test('remove warning returns passed list without the warning', () => {
-  let expected = [WARNINGS.TOO_LONG]
-  let actual = removeWarning(
-    [WARNINGS.TOO_LONG, WARNINGS.TOO_SHORT],
-    WARNINGS.TOO_SHORT,
-  )
-
-  expect(actual).toEqual(expected)
-
-  expected = [WARNINGS.TOO_LONG]
-  actual = removeWarning([WARNINGS.TOO_LONG], WARNINGS.TOO_SHORT)
 
   expect(actual).toEqual(expected)
 })

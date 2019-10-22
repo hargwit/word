@@ -6,7 +6,7 @@ import {
   checkLength,
   addWarning,
   anyWarning,
-} from '../validation'
+} from './validation'
 
 import { WARNINGS } from '../constants'
 

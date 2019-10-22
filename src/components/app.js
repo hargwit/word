@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { UserInput } from './input/user-input'
+import { Guesser } from './input/guesser/guesser'
 
-const App = () => <UserInput />
+const App = () => <Guesser addGuess={guess => console.log(guess)} />
 
 export { App }
