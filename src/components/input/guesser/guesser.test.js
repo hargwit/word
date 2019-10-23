@@ -5,6 +5,12 @@ import userEvent from '@testing-library/user-event'
 
 import { Guesser } from './guesser'
 
+import { useMyWord } from '../../my-word/my-word-context'
+
+jest.mock('../../my-word/my-word-context', () => ({
+  useMyWord: jest.fn(() => ({ myWord: '' })),
+}))
+
 test('shows placeholder text and disabled submit button when no word is entered', () => {
   const { getByPlaceholderText, getByTestId } = render(
     <Guesser addGuess={jest.fn()} />,
@@ -91,8 +97,10 @@ test('calls add guess with correct guess format on submit', () => {
 })
 
 test('letters is auto-populated and not editable if autocomplete is set to true', () => {
+  useMyWord.mockImplementation(() => ({ myWord: 'word' }))
+
   const { getByPlaceholderText, getByTestId } = render(
-    <Guesser addGuess={jest.fn()} autocomplete myWord='word' />,
+    <Guesser addGuess={jest.fn()} autocomplete />,
   )
 
   expect(getByTestId('letters_input')).toBeDisabled()

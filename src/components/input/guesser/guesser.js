@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 
 import { WARNINGS } from '../constants'
 import { ValidatedInput } from '../validated-input/validated-input'
+import { useMyWord } from '../../my-word/my-word-context'
 
-const Guesser = ({ addGuess, autocomplete, myWord }) => {
+const Guesser = ({ addGuess, autocomplete }) => {
+  const { myWord } = useMyWord()
   const [word, setWord] = useState('')
   const [valid, setValid] = useState(false)
   const [letters, setLetters] = useState(0)
@@ -61,7 +63,7 @@ const Guesser = ({ addGuess, autocomplete, myWord }) => {
         type='number'
         onChange={event => updateLetters(event.target.value)}
         value={letters}
-        disabled={autocomplete && myWord}
+        disabled={autocomplete}
         aria-label='Number of letters in common'
       />
       <input
@@ -78,7 +80,6 @@ const Guesser = ({ addGuess, autocomplete, myWord }) => {
 Guesser.propTypes = {
   addGuess: PropTypes.func.isRequired,
   autocomplete: PropTypes.bool,
-  myWord: PropTypes.string,
 }
 
 export { Guesser }
