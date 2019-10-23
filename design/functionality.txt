@@ -1,7 +1,7 @@
 - Clicking about button opens modal
 - Tapping a letter opens menu with a tick and a cross
-- Tapping tick makes letter green and bold
-- Tapping cross makes letter red and italic
+- - Tapping tick makes letter green and bold
+- - Tapping cross makes letter red and italic
 - User chosen word has validation
 - User can enter guessed word and number of correct letters
 - User can enter other players guess
