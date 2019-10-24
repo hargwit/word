@@ -11,9 +11,10 @@ jest.mock('./my-word-context', () => ({
   useMyWord: jest.fn(() => ({ myWord: '', setWord: jest.fn() })),
 }))
 
-test('renders an input and a button that is disabled when input has no value', () => {
-  const { getByPlaceholderText, getByTestId } = render(<MyWord />)
+test('renders a title, input and a button that is disabled when input has no value', () => {
+  const { getByPlaceholderText, getByTestId, getByText } = render(<MyWord />)
 
+  expect(getByText('My Word')).toBeInTheDocument()
   expect(getByPlaceholderText('Enter word...')).toBeInTheDocument()
   expect(getByTestId('submit_button')).toBeInTheDocument()
   expect(getByTestId('submit_button')).toBeDisabled()

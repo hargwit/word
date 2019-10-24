@@ -15,22 +15,25 @@ const MyWord = () => {
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <ValidatedInput
-        disabled={!!myWord}
-        setWord={setLocalWord}
-        setValid={setValid}
-      />
-      {!myWord && (
-        <input
-          type='submit'
-          value='✓'
-          data-testid='submit_button'
-          disabled={!word || !valid}
-          aria-label='Submit guess'
+    <div>
+      <h2>My Word</h2>
+      <form onSubmit={onSubmit}>
+        <ValidatedInput
+          disabled={!!myWord}
+          setWord={setLocalWord}
+          setValid={setValid}
         />
-      )}
-    </form>
+        {!myWord && (
+          <input
+            type='submit'
+            value='✓'
+            data-testid='submit_button'
+            disabled={!word || !valid}
+            aria-label='Submit guess'
+          />
+        )}
+      </form>
+    </div>
   )
 }
 
