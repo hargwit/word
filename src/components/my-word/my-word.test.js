@@ -31,10 +31,12 @@ test('disables button when warning is present', () => {
   expect(getByTestId('submit_button')).toBeEnabled()
 })
 
-test('calls setWord on submit', () => {
+test('calls setWord on submit and then hides submit button and disables input', () => {
   const setWord = jest.fn()
   useMyWord.mockImplementation(() => ({ setWord }))
-  const { getByPlaceholderText, getByTestId } = render(<MyWord />)
+  const { getByPlaceholderText, getByTestId, queryByTestId, rerender } = render(
+    <MyWord />,
+  )
 
   userEvent.type(getByPlaceholderText('Enter word...'), 'word')
   userEvent.click(getByTestId('submit_button'))
@@ -42,4 +44,11 @@ test('calls setWord on submit', () => {
   expect(setWord).toHaveBeenCalled()
   expect(setWord).toHaveBeenCalledTimes(1)
   expect(setWord).toHaveBeenCalledWith('word')
+
+  useMyWord.mockImplementation(() => ({ myWord: 'word', setWord }))
+
+  rerender(<MyWord />)
+
+  expect(queryByTestId('submit_button')).toBeNull()
+  expect(getByPlaceholderText('Enter word...')).toBeDisabled()
 })

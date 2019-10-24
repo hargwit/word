@@ -10,7 +10,7 @@ import {
 
 import { WARNINGS } from '../constants'
 
-const ValidatedInput = ({ setWord, setValid, parentWarning }) => {
+const ValidatedInput = ({ setWord, setValid, parentWarning, disabled }) => {
   const [warnings, setWarnings] = useState([])
 
   const onUpdate = event => {
@@ -47,6 +47,7 @@ const ValidatedInput = ({ setWord, setValid, parentWarning }) => {
         placeholder='Enter word...'
         type='text'
         onChange={onUpdate}
+        disabled={disabled}
         aria-label='Enter guess here'
       />
       {anyWarning(warnings) &&
@@ -60,6 +61,7 @@ ValidatedInput.propTypes = {
   setWord: PropTypes.func.isRequired,
   setValid: PropTypes.func.isRequired,
   parentWarning: PropTypes.string,
+  disabled: PropTypes.bool,
 }
 
 export { ValidatedInput }

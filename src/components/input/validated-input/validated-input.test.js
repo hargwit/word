@@ -102,3 +102,11 @@ test('calls setWord and setValid when word updated', () => {
   expect(setValid).toHaveBeenNthCalledWith(3, false)
   expect(setValid).toHaveBeenNthCalledWith(4, true)
 })
+
+test('input is disabled when disabled prop set to true', () => {
+  const { getByPlaceholderText } = render(
+    <ValidatedInput setWord={jest.fn()} setValid={jest.fn()} disabled />,
+  )
+
+  expect(getByPlaceholderText('Enter word...')).toBeDisabled()
+})
