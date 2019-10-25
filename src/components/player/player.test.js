@@ -4,6 +4,12 @@ import userEvent from '@testing-library/user-event'
 
 import { Player } from './player'
 
+import { useMyWord } from '../my-word/my-word-context'
+
+jest.mock('../my-word/my-word-context', () => ({
+  useMyWord: jest.fn(() => ({ myWord: '' })),
+}))
+
 test('renders player number based on prop', () => {
   const { getByText, queryByText, rerender } = render(<Player number={1} />)
 
@@ -38,6 +44,8 @@ test('displays guesses correctly', () => {
 })
 
 test('turns on autocomplete for player 2', () => {
+  useMyWord.mockImplementation(() => ({ myWord: 'word' }))
+
   const { getByTestId, getByPlaceholderText, getByText } = render(
     <Player number={2} />,
   )
