@@ -16,8 +16,10 @@ const MyWord = () => {
 
   return (
     <div>
-      <h2>My Word</h2>
-      <form onSubmit={onSubmit}>
+      <h2>
+        <label htmlFor='my_word_input'>My Word</label>
+      </h2>
+      <form onSubmit={onSubmit} id='my_word_input'>
         <ValidatedInput
           disabled={!!myWord}
           setWord={setLocalWord}

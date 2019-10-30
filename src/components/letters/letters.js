@@ -12,10 +12,10 @@ const Letters = () => {
   }
 
   return (
-    <>
+    <div>
       <h2>Letters</h2>
       <div>{getLetters()}</div>
-    </>
+    </div>
   )
 }
 

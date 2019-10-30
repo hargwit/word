@@ -48,7 +48,7 @@ const ValidatedInput = ({ setWord, setValid, parentWarning, disabled }) => {
         type='text'
         onChange={onUpdate}
         disabled={disabled}
-        aria-label='Enter guess here'
+        aria-label='Enter word here'
       />
       {anyWarning(warnings) &&
         warnings.map((warning, index) => <p key={index}>{warning}</p>)}
