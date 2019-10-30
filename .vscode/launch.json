@@ -8,16 +8,21 @@
       "type": "node",
       "name": "vscode-jest-tests",
       "request": "launch",
-      "args": [
-        "test",
-        "--runInBand"
-      ],
+      "args": ["test", "--runInBand"],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "disableOptimisticBPs": true,
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/react-scripts",
       "protocol": "inspector"
+    },
+    {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Attach to Chrome",
+      "port": 9222,
+      "urlFilter": "http://localhost:3000/*",
+      "webRoot": "${workspaceFolder}"
     }
   ]
 }
