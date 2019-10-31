@@ -11,16 +11,24 @@ const Player = ({ number }) => {
 
   return (
     <div>
-      <h2>Player {number}</h2>
-      <div>
-        {guesses.map((guess, i) => (
-          <div key={i}>
-            <p>{guess.word}</p>
-            <p>{guess.letters}</p>
-          </div>
-        ))}
+      <h2>
+        <label htmlFor={`guesser_${number}`}>Player {number}</label>
+      </h2>
+      <div id={`guesser_${number}`}>
+        <div>
+          {guesses.map((guess, i) => (
+            <div key={i}>
+              <p>{guess.word}</p>
+              <p>{guess.letters}</p>
+            </div>
+          ))}
+        </div>
+        <Guesser
+          addGuess={addGuess}
+          autocomplete={number === 2}
+          myWord='word'
+        />
       </div>
-      <Guesser addGuess={addGuess} autocomplete={number === 2} myWord='word' />
     </div>
   )
 }

@@ -3,13 +3,13 @@ import { ValidatedInput } from '../input/validated-input/validated-input'
 import { useMyWord } from './my-word-context'
 
 const MyWord = () => {
-  const { myWord, setWord } = useMyWord()
+  const { myWord, setMyWord } = useMyWord()
   const [word, setLocalWord] = useState('')
   const [valid, setValid] = useState(false)
 
   const onSubmit = event => {
     if (!myWord && valid) {
-      setWord(word)
+      setMyWord(word)
     }
     event.preventDefault()
   }
@@ -17,9 +17,9 @@ const MyWord = () => {
   return (
     <div>
       <h2>
-        <label htmlFor='my_word_input'>My Word</label>
+        <label htmlFor='my_word_form'>My Word</label>
       </h2>
-      <form onSubmit={onSubmit} id='my_word_input'>
+      <form onSubmit={onSubmit} id='my_word_form'>
         <ValidatedInput
           disabled={!!myWord}
           setWord={setLocalWord}

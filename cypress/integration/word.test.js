@@ -18,4 +18,14 @@ it('it auto calculates the letters for player 2 when word is set', () => {
     )
     cy.findByTestId('submit_button', { container: subject }).click()
   })
+
+  cy.findByLabelText('Player 2').then(subject => {
+    cy.findAllByPlaceholderText('Enter word...', { container: subject }).type(
+      'ward',
+    )
+    cy.findByTestId('letters_input', { container: subject }).should(
+      'have.value',
+      '3',
+    )
+  })
 })
