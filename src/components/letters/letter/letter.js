@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import styled from '@emotion/styled'
+import { FlexBox } from '../../layout/flex-box'
 
 const Letter = ({ letter }) => {
   const [showMenu, setShowMenu] = useState(false)
@@ -26,21 +27,21 @@ const Letter = ({ letter }) => {
 
   const Menu = () =>
     showMenu ? (
-      <div>
+      <FlexBox>
         <button data-testid='select_button' onClick={() => toggleSelected()}>
           ✓
         </button>
         <button data-testid='reject_button' onClick={() => toggleRejected()}>
           ✗
         </button>
-      </div>
+      </FlexBox>
     ) : null
 
   return (
-    <div>
+    <FlexBox>
       <SubComponent onClick={() => toggleMenu()}>{letter}</SubComponent>
       <Menu />
-    </div>
+    </FlexBox>
   )
 }
 
