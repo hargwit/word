@@ -47,6 +47,8 @@ const Guesser = ({ addGuess, autocomplete }) => {
       letters: parseInt(letters),
     }
     addGuess(payload)
+    setWord('')
+    setLetters(0)
 
     event.preventDefault()
   }
@@ -54,6 +56,7 @@ const Guesser = ({ addGuess, autocomplete }) => {
   return (
     <form onSubmit={onSubmit}>
       <ValidatedInput
+        word={word}
         setWord={updateWord}
         setValid={setValid}
         parentWarning={warning}

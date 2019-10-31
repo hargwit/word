@@ -10,7 +10,13 @@ import {
 
 import { WARNINGS } from '../constants'
 
-const ValidatedInput = ({ setWord, setValid, parentWarning, disabled }) => {
+const ValidatedInput = ({
+  word,
+  setWord,
+  setValid,
+  parentWarning,
+  disabled,
+}) => {
   const [warnings, setWarnings] = useState([])
 
   const onUpdate = event => {
@@ -49,6 +55,7 @@ const ValidatedInput = ({ setWord, setValid, parentWarning, disabled }) => {
         onChange={onUpdate}
         disabled={disabled}
         aria-label='Enter word here'
+        value={word}
       />
       {anyWarning(warnings) &&
         warnings.map((warning, index) => <p key={index}>{warning}</p>)}
@@ -62,6 +69,7 @@ ValidatedInput.propTypes = {
   setValid: PropTypes.func.isRequired,
   parentWarning: PropTypes.string,
   disabled: PropTypes.bool,
+  word: PropTypes.string,
 }
 
 export { ValidatedInput }

@@ -106,14 +106,34 @@ test('letters is auto-populated and not editable if autocomplete is set to true'
   expect(getByTestId('letters_input')).toBeDisabled()
 
   userEvent.type(getByPlaceholderText('Enter word...'), 'wins')
-  expect(getByTestId('letters_input').value).toEqual('1')
+  expect(getByTestId('letters_input')).toHaveValue(1)
 
   userEvent.type(getByPlaceholderText('Enter word...'), 'wars')
-  expect(getByTestId('letters_input').value).toEqual('2')
+  expect(getByTestId('letters_input')).toHaveValue(2)
 
   userEvent.type(getByPlaceholderText('Enter word...'), 'ward')
-  expect(getByTestId('letters_input').value).toEqual('3')
+  expect(getByTestId('letters_input')).toHaveValue(3)
 
   userEvent.type(getByPlaceholderText('Enter word...'), 'word')
-  expect(getByTestId('letters_input').value).toEqual('4')
+  expect(getByTestId('letters_input')).toHaveValue(4)
+})
+
+test('clears inputs on submit', () => {
+  const addGuess = jest.fn()
+
+  const { getByPlaceholderText, getByTestId } = render(
+    <Guesser addGuess={addGuess} />,
+  )
+
+  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
+  userEvent.type(getByTestId('letters_input'), '3')
+
+  expect(getByPlaceholderText('Enter word...')).toHaveValue('word')
+  expect(getByTestId('letters_input')).toHaveValue(3)
+
+  userEvent.click(getByTestId('submit_button'))
+
+  expect(addGuess).toHaveBeenCalled()
+  expect(getByPlaceholderText('Enter word...')).toHaveValue('')
+  expect(getByTestId('letters_input')).toHaveValue(0)
 })
