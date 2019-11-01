@@ -6,13 +6,14 @@ import { Player } from './player/player'
 import { MyWord } from './my-word/my-word'
 import { MyWordProvider } from './my-word/my-word-context'
 import { FlexBox } from './layout/flex-box'
+import { Header } from './layout/header'
 
 const App = () => (
   <FlexBox flexDirection='column'>
-    <FlexBox justifyContent='space-between'>
+    <Header>
       <h1>Word</h1>
       <AboutButton />
-    </FlexBox>
+    </Header>
     <FlexBox justifyContent='space-around'>
       <Letters />
       <MyWordProvider>
