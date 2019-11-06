@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Guesser } from '../input/guesser/guesser'
-import { FlexBox } from '../layout/flex-box'
 
 const Player = ({ number }) => {
   const [guesses, setGuesses] = useState([])
@@ -18,10 +17,10 @@ const Player = ({ number }) => {
       <div id={`guesser_${number}`}>
         <div>
           {guesses.map((guess, i) => (
-            <FlexBox justifyContent='space-around' key={i}>
+            <div key={i}>
               <p>{guess.word}</p>
               <p>{guess.letters}</p>
-            </FlexBox>
+            </div>
           ))}
         </div>
         <Guesser

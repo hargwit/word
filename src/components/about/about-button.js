@@ -1,8 +1,17 @@
 import React, { useState } from 'react'
 import { Modal } from './modal'
-import { FlexBox } from '../layout/flex-box'
+import { Button } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
+
+const useStyles = makeStyles({
+  button: {
+    marginRight: '2rem',
+    marginLeft: '2rem',
+  },
+})
 
 const AboutButton = () => {
+  const classes = useStyles()
   const [showModal, setShowModal] = useState(false)
 
   const openModal = () => {
@@ -15,10 +24,16 @@ const AboutButton = () => {
 
   return (
     <>
-      <button onClick={() => openModal()}>About</button>
+      <Button
+        color='inherit'
+        onClick={() => openModal()}
+        className={classes.button}
+      >
+        About
+      </Button>
       {showModal && (
         <Modal>
-          <FlexBox flexDirection='column'>
+          <div>
             <h2>About Word</h2>
             <p>The aim of the game is to guess the other persons word first</p>
             <h3>How to play</h3>
@@ -44,7 +59,7 @@ const AboutButton = () => {
             <button data-testid='close_button' onClick={() => closeModal()}>
               ✗
             </button>
-          </FlexBox>
+          </div>
         </Modal>
       )}
     </>
