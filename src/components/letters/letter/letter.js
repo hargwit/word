@@ -5,7 +5,7 @@ import { Grid, Button } from '@material-ui/core'
 import styled from '@emotion/styled'
 
 const Letter = ({ letter }) => {
-  const [showMenu, setShowMenu] = useState(true)
+  const [showMenu, setShowMenu] = useState(false)
   const [selected, setSelected] = useState(false)
   const [rejected, setRejected] = useState(false)
 
@@ -28,10 +28,18 @@ const Letter = ({ letter }) => {
   const Menu = () =>
     showMenu ? (
       <>
-        <Button data-testid='select_button' onClick={() => toggleSelected()}>
+        <Button
+          data-testid='select_button'
+          onClick={() => toggleSelected()}
+          size='small'
+        >
           ✓
         </Button>
-        <Button data-testid='reject_button' onClick={() => toggleRejected()}>
+        <Button
+          data-testid='reject_button'
+          onClick={() => toggleRejected()}
+          size='small'
+        >
           ✗
         </Button>
       </>
