@@ -1,17 +1,8 @@
 import React, { useState } from 'react'
 import { Modal } from './modal'
 import { Button } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
-
-const useStyles = makeStyles({
-  button: {
-    marginRight: '2rem',
-    marginLeft: '2rem',
-  },
-})
 
 const AboutButton = () => {
-  const classes = useStyles()
   const [showModal, setShowModal] = useState(false)
 
   const openModal = () => {
@@ -24,11 +15,7 @@ const AboutButton = () => {
 
   return (
     <>
-      <Button
-        color='inherit'
-        onClick={() => openModal()}
-        className={classes.button}
-      >
+      <Button color='inherit' onClick={() => openModal()}>
         About
       </Button>
       {showModal && (

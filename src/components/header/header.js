@@ -7,8 +7,6 @@ import { AboutButton } from '../about/about-button'
 const useStyles = makeStyles({
   title: {
     flexGrow: 1,
-    marginRight: '2rem',
-    marginLeft: '2rem',
   },
 })
 
@@ -19,7 +17,7 @@ const Header = () => {
     <AppBar position='static'>
       <Container maxWidth='md'>
         <Toolbar>
-          <Typography variant='h3' className={classes.title}>
+          <Typography variant='h4' className={classes.title}>
             Word
           </Typography>
           <AboutButton />

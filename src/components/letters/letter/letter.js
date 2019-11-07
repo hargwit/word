@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { Grid, Button } from '@material-ui/core'
 import styled from '@emotion/styled'
 
 const Letter = ({ letter }) => {
-  const [showMenu, setShowMenu] = useState(false)
+  const [showMenu, setShowMenu] = useState(true)
   const [selected, setSelected] = useState(false)
   const [rejected, setRejected] = useState(false)
 
@@ -26,21 +27,25 @@ const Letter = ({ letter }) => {
 
   const Menu = () =>
     showMenu ? (
-      <div>
-        <button data-testid='select_button' onClick={() => toggleSelected()}>
+      <>
+        <Button data-testid='select_button' onClick={() => toggleSelected()}>
           ✓
-        </button>
-        <button data-testid='reject_button' onClick={() => toggleRejected()}>
+        </Button>
+        <Button data-testid='reject_button' onClick={() => toggleRejected()}>
           ✗
-        </button>
-      </div>
+        </Button>
+      </>
     ) : null
 
   return (
-    <div>
-      <SubComponent onClick={() => toggleMenu()}>{letter}</SubComponent>
-      <Menu />
-    </div>
+    <Grid container justify='center' alignItems='center'>
+      <Grid item>
+        <SubComponent onClick={() => toggleMenu()}>{letter}</SubComponent>
+      </Grid>
+      <Grid item>
+        <Menu />
+      </Grid>
+    </Grid>
   )
 }
 
