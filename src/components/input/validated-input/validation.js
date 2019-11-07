@@ -16,7 +16,7 @@ function checkLength(word) {
 }
 
 function addWarning(warnings, warning) {
-  if (!warnings.includes(warning)) {
+  if (warning && !warnings.includes(warning)) {
     return [...warnings, warning]
   }
   return [...warnings]

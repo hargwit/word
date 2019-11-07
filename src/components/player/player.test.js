@@ -22,18 +22,18 @@ test('renders player number based on prop', () => {
 })
 
 test('displays guesses correctly', () => {
-  const { getByTestId, getByPlaceholderText, getByText } = render(
+  const { getByTestId, getByLabelText, getByText } = render(
     <Player number={1} />,
   )
 
-  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
+  userEvent.type(getByLabelText('Enter word...'), 'word')
   userEvent.type(getByTestId('letters_input'), '1')
   userEvent.click(getByTestId('submit_button'))
 
   expect(getByText('word')).toBeInTheDocument()
   expect(getByText('1')).toBeInTheDocument()
 
-  userEvent.type(getByPlaceholderText('Enter word...'), 'town')
+  userEvent.type(getByLabelText('Enter word...'), 'town')
   userEvent.type(getByTestId('letters_input'), '2')
   userEvent.click(getByTestId('submit_button'))
 
@@ -46,11 +46,11 @@ test('displays guesses correctly', () => {
 test('turns on autocomplete for player 2', () => {
   useMyWord.mockImplementation(() => ({ myWord: 'word' }))
 
-  const { getByTestId, getByPlaceholderText, getByText } = render(
+  const { getByTestId, getByLabelText, getByText } = render(
     <Player number={2} />,
   )
 
-  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
+  userEvent.type(getByLabelText('Enter word...'), 'word')
   userEvent.click(getByTestId('submit_button'))
 
   expect(getByText('word')).toBeInTheDocument()

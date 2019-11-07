@@ -20,8 +20,8 @@ const Letters = () => {
     const letters = []
     for (let i = 0; i < 26; i++) {
       letters.push(
-        <Grid item className={classes.letter}>
-          <Letter key={i} letter={String.fromCharCode(97 + i)} />
+        <Grid key={i} item className={classes.letter}>
+          <Letter letter={String.fromCharCode(97 + i)} />
         </Grid>,
       )
     }

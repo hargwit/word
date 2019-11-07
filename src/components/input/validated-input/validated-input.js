@@ -9,6 +9,7 @@ import {
 } from './validation'
 
 import { WARNINGS } from '../constants'
+import { TextField } from '@material-ui/core'
 
 const ValidatedInput = ({
   word,
@@ -48,19 +49,21 @@ const ValidatedInput = ({
   }
 
   return (
-    <>
-      <input
-        placeholder='Enter word...'
-        type='text'
-        onChange={onUpdate}
-        disabled={disabled}
-        aria-label='Enter word here'
-        value={word}
-      />
-      {anyWarning(warnings) &&
-        warnings.map((warning, index) => <p key={index}>{warning}</p>)}
-      {parentWarning && <p>{parentWarning}</p>}
-    </>
+    <TextField
+      id='validated_input'
+      label='Enter word...'
+      type='text'
+      onChange={onUpdate}
+      disabled={disabled}
+      aria-label='Enter word here'
+      value={word}
+      variant='outlined'
+      error={anyWarning(addWarning(warnings, parentWarning))}
+      helperText={
+        anyWarning(addWarning(warnings, parentWarning)) &&
+        addWarning(warnings, parentWarning)[0]
+      }
+    />
   )
 }
 

@@ -6,57 +6,57 @@ import userEvent from '@testing-library/user-event'
 import { ValidatedInput } from './validated-input'
 
 test('shows placeholder text when no word is entered', () => {
-  const { getByPlaceholderText } = render(
+  const { getByLabelText } = render(
     <ValidatedInput setWord={jest.fn()} setValid={jest.fn()} />,
   )
 
-  expect(getByPlaceholderText('Enter word...')).toBeInTheDocument()
+  expect(getByLabelText('Enter word...')).toBeInTheDocument()
 })
 
 test('shows warning when word not long enough', () => {
-  const { getByPlaceholderText, getByText, queryByText } = render(
+  const { getByLabelText, getByText, queryByText } = render(
     <ValidatedInput setWord={jest.fn()} setValid={jest.fn()} />,
   )
 
-  userEvent.type(getByPlaceholderText('Enter word...'), 'wor')
+  userEvent.type(getByLabelText('Enter word...'), 'wor')
 
   expect(getByText('Too short')).toBeInTheDocument()
 
-  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
+  userEvent.type(getByLabelText('Enter word...'), 'word')
 
   expect(queryByText('Too short')).toBeNull()
 })
 
 test('shows warning when word too long', () => {
-  const { getByPlaceholderText, getByText, queryByText } = render(
+  const { getByLabelText, getByText, queryByText } = render(
     <ValidatedInput setWord={jest.fn()} setValid={jest.fn()} />,
   )
 
-  userEvent.type(getByPlaceholderText('Enter word...'), 'words')
+  userEvent.type(getByLabelText('Enter word...'), 'words')
 
   expect(getByText('Too long')).toBeInTheDocument()
 
-  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
+  userEvent.type(getByLabelText('Enter word...'), 'word')
 
   expect(queryByText('Too long')).toBeNull()
 })
 
 test('shows warning when duplicates present', () => {
-  const { getByPlaceholderText, getByText, queryByText } = render(
+  const { getByLabelText, getByText, queryByText } = render(
     <ValidatedInput setWord={jest.fn()} setValid={jest.fn()} />,
   )
 
-  userEvent.type(getByPlaceholderText('Enter word...'), 'wood')
+  userEvent.type(getByLabelText('Enter word...'), 'wood')
 
   expect(getByText('No duplicates')).toBeInTheDocument()
 
-  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
+  userEvent.type(getByLabelText('Enter word...'), 'word')
 
   expect(queryByText('No duplicates')).toBeNull()
 })
 
 test('displays warning passed in as a prop', () => {
-  const { getByText, getByPlaceholderText, rerender } = render(
+  const { getByText, getByLabelText, rerender } = render(
     <ValidatedInput
       setWord={jest.fn()}
       setValid={jest.fn()}
@@ -64,10 +64,9 @@ test('displays warning passed in as a prop', () => {
     />,
   )
 
-  userEvent.type(getByPlaceholderText('Enter word...'), 'wo')
+  userEvent.type(getByLabelText('Enter word...'), 'word')
 
   expect(getByText('A parent warning')).toBeInTheDocument()
-  expect(getByText('Too short')).toBeInTheDocument()
 
   rerender(
     <ValidatedInput
@@ -78,17 +77,16 @@ test('displays warning passed in as a prop', () => {
   )
 
   expect(getByText('A different parent warning')).toBeInTheDocument()
-  expect(getByText('Too short')).toBeInTheDocument()
 })
 
 test('calls setWord and setValid when word updated', () => {
   const setWord = jest.fn()
   const setValid = jest.fn()
-  const { getByPlaceholderText } = render(
+  const { getByLabelText } = render(
     <ValidatedInput setWord={setWord} setValid={setValid} />,
   )
 
-  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
+  userEvent.type(getByLabelText('Enter word...'), 'word')
 
   expect(setWord).toHaveBeenCalledTimes(4)
   expect(setWord).toHaveBeenNthCalledWith(1, 'w')
@@ -104,9 +102,9 @@ test('calls setWord and setValid when word updated', () => {
 })
 
 test('input is disabled when disabled prop set to true', () => {
-  const { getByPlaceholderText } = render(
+  const { getByLabelText } = render(
     <ValidatedInput setWord={jest.fn()} setValid={jest.fn()} disabled />,
   )
 
-  expect(getByPlaceholderText('Enter word...')).toBeDisabled()
+  expect(getByLabelText('Enter word...')).toBeDisabled()
 })

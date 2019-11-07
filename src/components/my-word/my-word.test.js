@@ -12,34 +12,34 @@ jest.mock('./my-word-context', () => ({
 }))
 
 test('renders a title, input and a button that is disabled when input has no value', () => {
-  const { getByPlaceholderText, getByTestId, getByText } = render(<MyWord />)
+  const { getByLabelText, getByTestId, getByText } = render(<MyWord />)
 
   expect(getByText('My Word')).toBeInTheDocument()
-  expect(getByPlaceholderText('Enter word...')).toBeInTheDocument()
+  expect(getByLabelText('Enter word...')).toBeInTheDocument()
   expect(getByTestId('submit_button')).toBeInTheDocument()
   expect(getByTestId('submit_button')).toBeDisabled()
 })
 
 test('disables button when warning is present', () => {
-  const { getByPlaceholderText, getByTestId, getByText } = render(<MyWord />)
+  const { getByLabelText, getByTestId, getByText } = render(<MyWord />)
 
-  userEvent.type(getByPlaceholderText('Enter word...'), 'wood')
+  userEvent.type(getByLabelText('Enter word...'), 'wood')
 
   expect(getByText('No duplicates')).toBeInTheDocument()
   expect(getByTestId('submit_button')).toBeDisabled()
 
-  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
+  userEvent.type(getByLabelText('Enter word...'), 'word')
   expect(getByTestId('submit_button')).toBeEnabled()
 })
 
 test('calls setWord on submit and then hides submit button and disables input', () => {
   const setMyWord = jest.fn()
   useMyWord.mockImplementation(() => ({ setMyWord }))
-  const { getByPlaceholderText, getByTestId, queryByTestId, rerender } = render(
+  const { getByLabelText, getByTestId, queryByTestId, rerender } = render(
     <MyWord />,
   )
 
-  userEvent.type(getByPlaceholderText('Enter word...'), 'word')
+  userEvent.type(getByLabelText('Enter word...'), 'word')
   userEvent.click(getByTestId('submit_button'))
 
   expect(setMyWord).toHaveBeenCalled()
@@ -51,5 +51,5 @@ test('calls setWord on submit and then hides submit button and disables input', 
   rerender(<MyWord />)
 
   expect(queryByTestId('submit_button')).toBeNull()
-  expect(getByPlaceholderText('Enter word...')).toBeDisabled()
+  expect(getByLabelText('Enter word...')).toBeDisabled()
 })
