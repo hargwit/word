@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 const AboutButton = () => {
   const classes = useStyles()
 
-  const [showModal, setShowModal] = useState(true)
+  const [showModal, setShowModal] = useState(false)
 
   const openModal = () => {
     setShowModal(true)
