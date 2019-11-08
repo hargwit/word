@@ -1,15 +1,13 @@
 import React from 'react'
 
 import { Letter } from './letter/letter'
-import { Grid, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles({
   root: {
-    margin: '1rem',
-  },
-  letter: {
-    marginBottom: '-1rem',
+    marginLeft: '1rem',
+    marginRight: '1rem',
   },
 })
 
@@ -19,29 +17,16 @@ const Letters = () => {
   function getLetters() {
     const letters = []
     for (let i = 0; i < 26; i++) {
-      letters.push(
-        <Grid key={i} item className={classes.letter}>
-          <Letter letter={String.fromCharCode(97 + i)} />
-        </Grid>,
-      )
+      letters.push(<Letter key={i} letter={String.fromCharCode(97 + i)} />)
     }
     return letters
   }
 
   return (
-    <Grid
-      container
-      direction='column'
-      alignItems='center'
-      className={classes.root}
-    >
-      <Grid item>
-        <Typography variant='h5'>Letters</Typography>
-      </Grid>
-      <Grid item container direction='column' alignItems='center'>
-        {getLetters()}
-      </Grid>
-    </Grid>
+    <div className={classes.root}>
+      <Typography variant='h5'>Letters</Typography>
+      {getLetters()}
+    </div>
   )
 }
 
