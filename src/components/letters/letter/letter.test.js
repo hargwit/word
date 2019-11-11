@@ -29,22 +29,24 @@ test('opens and closes menu on click', () => {
 })
 
 test('toggles color to red and strike through on reject', () => {
-  const { getByText, getByTestId } = render(<Letter letter='a' />)
+  const { getByText, getByTestId, debug } = render(<Letter letter='a' />)
 
-  expect(getByText('a')).toHaveStyleRule('color', 'black')
-  expect(getByText('a')).not.toHaveStyleRule('text-decoration', 'line-through')
+  debug()
 
-  fireEvent.click(getByText('a'))
+  expect(getByText('A')).toHaveStyleRule('color', 'black')
+  expect(getByText('A')).not.toHaveStyleRule('text-decoration', 'line-through')
+
+  fireEvent.click(getByText('A'))
   fireEvent.click(getByTestId('reject_button'))
 
-  expect(getByText('a')).toHaveStyleRule('color', 'red')
-  expect(getByText('a')).toHaveStyleRule('text-decoration', 'line-through')
+  expect(getByText('A')).toHaveStyleRule('color', 'red')
+  expect(getByText('A')).toHaveStyleRule('text-decoration', 'line-through')
 
-  fireEvent.click(getByText('a'))
+  fireEvent.click(getByText('A'))
   fireEvent.click(getByTestId('reject_button'))
 
-  expect(getByText('a')).toHaveStyleRule('color', 'black')
-  expect(getByText('a')).not.toHaveStyleRule('text-decoration', 'line-through')
+  expect(getByText('A')).toHaveStyleRule('color', 'black')
+  expect(getByText('A')).not.toHaveStyleRule('text-decoration', 'line-through')
 })
 
 test('toggles color to green and bold on select', () => {

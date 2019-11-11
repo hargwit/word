@@ -6,8 +6,19 @@ import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles({
   root: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     marginLeft: '1rem',
     marginRight: '1rem',
+    minWidth: '100px',
+  },
+  lettersContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
 })
 
@@ -17,7 +28,7 @@ const Letters = () => {
   function getLetters() {
     const letters = []
     for (let i = 0; i < 26; i++) {
-      letters.push(<Letter key={i} letter={String.fromCharCode(97 + i)} />)
+      letters.push(<Letter key={i} letter={String.fromCharCode(65 + i)} />)
     }
     return letters
   }
@@ -25,7 +36,7 @@ const Letters = () => {
   return (
     <div className={classes.root}>
       <Typography variant='h5'>Letters</Typography>
-      {getLetters()}
+      <div className={classes.lettersContainer}>{getLetters()}</div>
     </div>
   )
 }

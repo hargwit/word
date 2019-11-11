@@ -1,15 +1,46 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { Grid, Button } from '@material-ui/core'
-import styled from '@emotion/styled'
+import { Button, ButtonGroup, Typography } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
+
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    borderRadius: 4,
+    backgroundColor: props => (props.showMenu ? 'rgba(0, 0, 0, 0.1)' : ''),
+    marginTop: 4,
+    marginBottom: 4,
+  },
+  letter: props => {
+    let specificStyling
+    if (props.selected) {
+      specificStyling = {
+        color: 'green',
+        fontWeight: 'bold',
+      }
+    } else if (props.rejected) {
+      specificStyling = {
+        color: 'red',
+        textDecoration: 'line-through',
+      }
+    } else {
+      specificStyling = {
+        color: 'black',
+      }
+    }
+    return { marginTop: '0.25rem', marginBottom: '0.25rem', ...specificStyling }
+  },
+})
 
 const Letter = ({ letter }) => {
   const [showMenu, setShowMenu] = useState(false)
   const [selected, setSelected] = useState(false)
   const [rejected, setRejected] = useState(false)
-
-  const SubComponent = selected ? SelectedP : rejected ? RejectedP : P
+  const classes = useStyles({ showMenu, selected, rejected })
 
   function toggleMenu() {
     setShowMenu(!showMenu)
@@ -27,33 +58,35 @@ const Letter = ({ letter }) => {
 
   const Menu = () =>
     showMenu ? (
-      <>
+      <ButtonGroup
+        variant='contained'
+        size='small'
+        aria-label='letter control button group'
+      >
         <Button
+          color='primary'
           data-testid='select_button'
           onClick={() => toggleSelected()}
-          size='small'
         >
           ✓
         </Button>
         <Button
+          color='secondary'
           data-testid='reject_button'
           onClick={() => toggleRejected()}
-          size='small'
         >
           ✗
         </Button>
-      </>
+      </ButtonGroup>
     ) : null
 
   return (
-    <Grid container justify='center' alignItems='center'>
-      <Grid item>
-        <SubComponent onClick={() => toggleMenu()}>{letter}</SubComponent>
-      </Grid>
-      <Grid item>
-        <Menu />
-      </Grid>
-    </Grid>
+    <div className={classes.root}>
+      <Typography onClick={() => toggleMenu()} className={classes.letter}>
+        {letter}
+      </Typography>
+      <Menu />
+    </div>
   )
 }
 
@@ -62,17 +95,3 @@ Letter.propTypes = {
 }
 
 export { Letter }
-
-const P = styled('p')`
-  color: black;
-`
-
-const RejectedP = styled('p')`
-  color: red;
-  text-decoration: line-through;
-`
-
-const SelectedP = styled('p')`
-  color: green;
-  font-weight: bold;
-`
