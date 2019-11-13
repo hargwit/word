@@ -2,28 +2,9 @@ import React, { useLayoutEffect } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
-import { makeStyles } from '@material-ui/styles'
-
 import './modal.css'
 
-const useStyles = makeStyles({
-  modalContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    position: 'fixed',
-    height: '100%',
-    width: '100%',
-    top: 0,
-    left: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '2rem',
-  },
-})
-
 const Modal = ({ children }) => {
-  const classes = useStyles()
-
   let modalRoot = document.getElementById('modal_root')
   if (!modalRoot) {
     modalRoot = document.createElement('div')
@@ -39,13 +20,28 @@ const Modal = ({ children }) => {
   }, [modalRoot])
 
   return ReactDOM.createPortal(
-    <div className={classes.modalContainer}>{children}</div>,
+    <div style={styles.modalContainer}>{children}</div>,
     modalRoot,
   )
 }
 
 Modal.propTypes = {
   children: PropTypes.node,
+}
+
+const styles = {
+  modalContainer: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    position: 'fixed',
+    height: '100%',
+    width: '100%',
+    top: 0,
+    left: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '2rem',
+  },
 }
 
 export { Modal }

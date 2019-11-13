@@ -7,21 +7,8 @@ import {
   Typography,
   CardActions,
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
-
-const useStyles = makeStyles({
-  card: {
-    padding: '0.5rem',
-  },
-  button: {
-    marginLeft: 'auto',
-    marginBottom: '0.5rem',
-  },
-})
 
 const AboutButton = () => {
-  const classes = useStyles()
-
   const [showModal, setShowModal] = useState(false)
 
   const openModal = () => {
@@ -39,7 +26,7 @@ const AboutButton = () => {
       </Button>
       {showModal && (
         <Modal>
-          <Card className={classes.card}>
+          <Card styles={styles.card}>
             <CardContent>
               <Typography gutterBottom variant='h4'>
                 About Word
@@ -80,7 +67,7 @@ const AboutButton = () => {
                 color='primary'
                 data-testid='close_button'
                 onClick={() => closeModal()}
-                className={classes.button}
+                style={styles.button}
               >
                 Close
               </Button>
@@ -90,6 +77,16 @@ const AboutButton = () => {
       )}
     </>
   )
+}
+
+const styles = {
+  card: {
+    padding: '0.5rem',
+  },
+  button: {
+    marginLeft: 'auto',
+    marginBottom: '0.5rem',
+  },
 }
 
 export { AboutButton }
