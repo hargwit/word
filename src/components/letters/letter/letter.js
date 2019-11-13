@@ -7,7 +7,6 @@ const Letter = ({ letter }) => {
   const [showMenu, setShowMenu] = useState(false)
   const [selected, setSelected] = useState(false)
   const [rejected, setRejected] = useState(false)
-  const styles = makeStyles({ showMenu, selected, rejected })
 
   function toggleMenu() {
     setShowMenu(!showMenu)
@@ -23,6 +22,7 @@ const Letter = ({ letter }) => {
     setShowMenu(false)
   }
 
+  const styles = makeStyles({ showMenu, selected, rejected })
   const Menu = () =>
     showMenu ? (
       <ButtonGroup

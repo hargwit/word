@@ -5,10 +5,26 @@ import { Player } from './player/player'
 import { MyWord } from './my-word/my-word'
 import { MyWordProvider } from './my-word/my-word-context'
 import { Header } from './header/header'
-import { makeStyles } from '@material-ui/styles'
 import { CssBaseline } from '@material-ui/core'
 
-const useStyles = makeStyles({
+const App = () => (
+  <>
+    <CssBaseline />
+    <div style={styles.root}>
+      <Header />
+      <div style={styles.content}>
+        <Letters />
+        <MyWordProvider>
+          <Player number={1} />
+          <Player number={2} />
+          <MyWord />
+        </MyWordProvider>
+      </div>
+    </div>
+  </>
+)
+
+const styles = {
   root: {
     flexGrow: 1,
     display: 'flex',
@@ -26,27 +42,6 @@ const useStyles = makeStyles({
     marginRight: '1rem',
     marginTop: '2rem',
   },
-})
-
-const App = () => {
-  const classes = useStyles()
-
-  return (
-    <>
-      <CssBaseline />
-      <div className={classes.root}>
-        <Header />
-        <div className={classes.content}>
-          <Letters />
-          <MyWordProvider>
-            <Player number={1} />
-            <Player number={2} />
-            <MyWord />
-          </MyWordProvider>
-        </div>
-      </div>
-    </>
-  )
 }
 
 export { App }
