@@ -2,45 +2,12 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { Button, ButtonGroup, Typography } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
-
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    borderRadius: 4,
-    backgroundColor: props => (props.showMenu ? 'rgba(0, 0, 0, 0.1)' : ''),
-    marginTop: 4,
-    marginBottom: 4,
-  },
-  letter: props => {
-    let specificStyling
-    if (props.selected) {
-      specificStyling = {
-        color: 'green',
-        fontWeight: 'bold',
-      }
-    } else if (props.rejected) {
-      specificStyling = {
-        color: 'red',
-        textDecoration: 'line-through',
-      }
-    } else {
-      specificStyling = {
-        color: 'black',
-      }
-    }
-    return { marginTop: '0.25rem', marginBottom: '0.25rem', ...specificStyling }
-  },
-})
 
 const Letter = ({ letter }) => {
   const [showMenu, setShowMenu] = useState(false)
   const [selected, setSelected] = useState(false)
   const [rejected, setRejected] = useState(false)
-  const classes = useStyles({ showMenu, selected, rejected })
+  const styles = makeStyles({ showMenu, selected, rejected })
 
   function toggleMenu() {
     setShowMenu(!showMenu)
@@ -81,8 +48,8 @@ const Letter = ({ letter }) => {
     ) : null
 
   return (
-    <div className={classes.root}>
-      <Typography onClick={() => toggleMenu()} className={classes.letter}>
+    <div style={styles.root}>
+      <Typography onClick={toggleMenu} style={styles.letter}>
         {letter}
       </Typography>
       <Menu />
@@ -93,5 +60,23 @@ const Letter = ({ letter }) => {
 Letter.propTypes = {
   letter: PropTypes.string.isRequired,
 }
+
+const makeStyles = ({ showMenu, rejected, selected }) => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    borderRadius: 4,
+    backgroundColor: showMenu ? 'rgba(0, 0, 0, 0.1)' : 'white',
+    marginTop: 4,
+    marginBottom: 4,
+  },
+  letter: {
+    color: selected ? 'green' : rejected ? 'red' : 'black',
+    fontWeight: selected ? 'bold' : 'normal',
+    textDecoration: rejected ? 'line-through' : '',
+  },
+})
 
 export { Letter }
