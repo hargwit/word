@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { TextField, Button } from '@material-ui/core'
+
 import { WARNINGS } from '../constants'
 import { ValidatedInput } from '../validated-input/validated-input'
 import { useMyWord } from '../../my-word/my-word-context'
@@ -54,28 +56,40 @@ const Guesser = ({ addGuess, autocomplete }) => {
   }
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} autoComplete='off' style={styles.form}>
       <ValidatedInput
         word={word}
         setWord={updateWord}
         setValid={setValid}
         parentWarning={warning}
       />
-      <input
-        data-testid='letters_input'
+      <TextField
         type='number'
         onChange={event => updateLetters(event.target.value)}
         value={letters}
         disabled={autocomplete}
+        margin='dense'
+        variant='outlined'
+        inputProps={{
+          max: 4,
+          min: 0,
+          'data-testid': 'letters_input',
+        }}
         aria-label='Number of letters in common'
+        style={styles.input}
       />
-      <input
+      <Button
         type='submit'
         value='✓'
         data-testid='submit_button'
         disabled={!word || !valid || !!warning}
         aria-label='Submit guess'
-      />
+        color='primary'
+        variant='contained'
+        style={styles.button}
+      >
+        ✓
+      </Button>
     </form>
   )
 }
@@ -83,6 +97,24 @@ const Guesser = ({ addGuess, autocomplete }) => {
 Guesser.propTypes = {
   addGuess: PropTypes.func.isRequired,
   autocomplete: PropTypes.bool,
+}
+const styles = {
+  form: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  button: {
+    maxWidth: '40px',
+    minWidth: '40px',
+    height: '40px',
+    marginTop: '8px',
+    marginBottom: '4px',
+  },
+  input: {
+    marginLeft: '0.5rem',
+    marginRight: '0.5rem',
+  },
 }
 
 export { Guesser }

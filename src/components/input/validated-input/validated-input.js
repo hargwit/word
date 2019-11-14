@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { TextField } from '@material-ui/core'
+
 import {
   hasDuplicates,
   checkLength,
@@ -9,7 +11,6 @@ import {
 } from './validation'
 
 import { WARNINGS } from '../constants'
-import { TextField } from '@material-ui/core'
 
 const ValidatedInput = ({
   word,
@@ -63,6 +64,11 @@ const ValidatedInput = ({
         anyWarning(addWarning(warnings, parentWarning)) &&
         addWarning(warnings, parentWarning)[0]
       }
+      margin='dense'
+      inputProps={{
+        maxLength: 4,
+      }}
+      style={styles.input}
     />
   )
 }
@@ -73,6 +79,12 @@ ValidatedInput.propTypes = {
   parentWarning: PropTypes.string,
   disabled: PropTypes.bool,
   word: PropTypes.string,
+}
+
+const styles = {
+  input: {
+    maxWidth: '125px',
+  },
 }
 
 export { ValidatedInput }

@@ -6,6 +6,9 @@ function hasDuplicates(word) {
 }
 
 function checkLength(word) {
+  if (!word) {
+    return 0
+  }
   if (word.length < 4) {
     return -1
   }
