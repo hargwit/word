@@ -73,6 +73,8 @@ const makeStyles = ({ showMenu, rejected, selected }) => ({
     marginBottom: 4,
   },
   letter: {
+    marginTop: '5px',
+    marginBottom: '5px',
     color: selected ? 'green' : rejected ? 'red' : 'black',
     fontWeight: selected ? 'bold' : 'normal',
     textDecoration: rejected ? 'line-through' : '',

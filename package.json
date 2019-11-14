@@ -40,8 +40,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress:open": "cypress open",
-    "cypress:reinstall": "cypress cache clear && cypress install"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:reinstall": "cypress cache clear && cypress install"
   },
   "browserslist": {
     "production": [
