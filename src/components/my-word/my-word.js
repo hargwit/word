@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { ValidatedInput } from '../input/validated-input/validated-input'
 import { useMyWord } from './my-word-context'
-import { Button } from '@material-ui/core'
+import { Button, Typography } from '@material-ui/core'
 
 const MyWord = () => {
   const { myWord, setMyWord } = useMyWord()
@@ -16,11 +16,11 @@ const MyWord = () => {
   }
 
   return (
-    <div>
-      <h2>
+    <div style={styles.root}>
+      <Typography variant='h5'>
         <label htmlFor='my_word_form'>My Word</label>
-      </h2>
-      <form onSubmit={onSubmit} id='my_word_form'>
+      </Typography>
+      <form onSubmit={onSubmit} id='my_word_form' style={styles.form}>
         <ValidatedInput
           disabled={!!myWord}
           setWord={setLocalWord}
@@ -46,6 +46,14 @@ const MyWord = () => {
 }
 
 const styles = {
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    justify: 'flex-start',
+    alignItems: 'center',
+    marginLeft: '1rem',
+    marginRight: '1rem',
+  },
   button: {
     maxWidth: '40px',
     minWidth: '40px',
@@ -53,6 +61,12 @@ const styles = {
     marginTop: '8px',
     marginBottom: '4px',
     marginLeft: '0.5rem',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: '5px',
   },
 }
 

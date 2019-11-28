@@ -102,7 +102,7 @@ const styles = {
   form: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   button: {
     maxWidth: '40px',
