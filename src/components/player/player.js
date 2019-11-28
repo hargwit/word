@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Guesser } from '../input/guesser/guesser'
+import { Typography } from '@material-ui/core'
 
 const Player = ({ number }) => {
   const [guesses, setGuesses] = useState([])
@@ -10,16 +11,16 @@ const Player = ({ number }) => {
   }
 
   return (
-    <div>
-      <h2>
+    <div style={styles.root}>
+      <Typography variant='h5'>
         <label htmlFor={`guesser_${number}`}>Player {number}</label>
-      </h2>
-      <div id={`guesser_${number}`}>
-        <div>
+      </Typography>
+      <div id={`guesser_${number}`} style={styles.container}>
+        <div style={styles.guesses}>
           {guesses.map((guess, i) => (
-            <div key={`${guess}_${i}`}>
-              <p>{guess.word}</p>
-              <p>{guess.letters}</p>
+            <div key={`${guess}_${i}`} style={styles.guess}>
+              <Typography style={styles.word}>{guess.word}</Typography>
+              <Typography style={styles.number}>{guess.letters}</Typography>
             </div>
           ))}
         </div>
@@ -35,6 +36,45 @@ const Player = ({ number }) => {
 
 Player.propTypes = {
   number: PropTypes.number.isRequired,
+}
+
+const styles = {
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    justify: 'flex-start',
+    alignItems: 'center',
+    marginLeft: '1rem',
+    marginRight: '1rem',
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginTop: '5px',
+  },
+  guesses: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%',
+  },
+  guess: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '100%',
+    height: '52px',
+  },
+  word: {
+    width: '50px',
+  },
+  number: {
+    width: '10px',
+  },
 }
 
 export { Player }

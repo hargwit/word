@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { ValidatedInput } from '../input/validated-input/validated-input'
 import { useMyWord } from './my-word-context'
+import { Button } from '@material-ui/core'
 
 const MyWord = () => {
   const { myWord, setMyWord } = useMyWord()
@@ -26,17 +27,33 @@ const MyWord = () => {
           setValid={setValid}
         />
         {!myWord && (
-          <input
+          <Button
             type='submit'
             value='✓'
             data-testid='submit_button'
             disabled={!word || !valid}
-            aria-label='Submit guess'
-          />
+            aria-label='Submit word'
+            color='primary'
+            variant='contained'
+            style={styles.button}
+          >
+            ✓
+          </Button>
         )}
       </form>
     </div>
   )
+}
+
+const styles = {
+  button: {
+    maxWidth: '40px',
+    minWidth: '40px',
+    height: '40px',
+    marginTop: '8px',
+    marginBottom: '4px',
+    marginLeft: '0.5rem',
+  },
 }
 
 export { MyWord }
