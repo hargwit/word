@@ -12,6 +12,10 @@ package-lock.json
 # production
 /build
 
+# Screenshots and videos
+cypress/screenshots
+cypress/videos
+
 # misc
 .DS_Store
 .env.local

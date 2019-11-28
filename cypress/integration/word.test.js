@@ -12,18 +12,13 @@ it('renders all components', () => {
 it('it auto calculates the letters for player 2 when word is set', () => {
   cy.visit('/')
 
-  cy.findByLabelText('My Word').then(subject => {
-    cy.getByLabelText('Enter word...', { container: subject }).type('word')
-    cy.findByTestId('submit_button', { container: subject }).click()
+  cy.findByLabelText('My Word').within(() => {
+    cy.findByLabelText('Enter word...').type('word')
+    cy.findByTestId('submit_button').click()
   })
 
-  cy.findByLabelText('Player 2').then(subject => {
-    cy.findAllByPlaceholderText('Enter word...', { container: subject }).type(
-      'ward',
-    )
-    cy.findByTestId('letters_input', { container: subject }).should(
-      'have.value',
-      '3',
-    )
+  cy.findByLabelText('Player 2').within(() => {
+    cy.findAllByPlaceholderText('Enter word...').type('ward')
+    cy.findByTestId('letters_input').should('have.value', '3')
   })
 })

@@ -17,7 +17,7 @@ const Player = ({ number }) => {
       <div id={`guesser_${number}`}>
         <div>
           {guesses.map((guess, i) => (
-            <div key={i}>
+            <div key={`${guess}_${i}`}>
               <p>{guess.word}</p>
               <p>{guess.letters}</p>
             </div>
