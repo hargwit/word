@@ -7,6 +7,8 @@ import { MyWord } from './my-word'
 
 import { useMyWord } from './my-word-context'
 
+import { INPUT_LABEL } from '../input/constants'
+
 jest.mock('./my-word-context', () => ({
   useMyWord: jest.fn(() => ({ myWord: '', setWord: jest.fn() })),
 }))
@@ -15,7 +17,7 @@ test('renders a title, input and a button that is disabled when input has no val
   const { getByLabelText, getByTestId, getByText } = render(<MyWord />)
 
   expect(getByText('My Word')).toBeInTheDocument()
-  expect(getByLabelText('Enter word...')).toBeInTheDocument()
+  expect(getByLabelText(INPUT_LABEL)).toBeInTheDocument()
   expect(getByTestId('submit_button')).toBeInTheDocument()
   expect(getByTestId('submit_button')).toBeDisabled()
 })
@@ -23,12 +25,12 @@ test('renders a title, input and a button that is disabled when input has no val
 test('disables button when warning is present', () => {
   const { getByLabelText, getByTestId, getByText } = render(<MyWord />)
 
-  userEvent.type(getByLabelText('Enter word...'), 'wood')
+  userEvent.type(getByLabelText(INPUT_LABEL), 'wood')
 
   expect(getByText('No duplicates')).toBeInTheDocument()
   expect(getByTestId('submit_button')).toBeDisabled()
 
-  userEvent.type(getByLabelText('Enter word...'), 'word')
+  userEvent.type(getByLabelText(INPUT_LABEL), 'word')
   expect(getByTestId('submit_button')).toBeEnabled()
 })
 
@@ -39,7 +41,7 @@ test('calls setWord on submit and then hides submit button and disables input', 
     <MyWord />,
   )
 
-  userEvent.type(getByLabelText('Enter word...'), 'word')
+  userEvent.type(getByLabelText(INPUT_LABEL), 'word')
   userEvent.click(getByTestId('submit_button'))
 
   expect(setMyWord).toHaveBeenCalled()
@@ -51,5 +53,5 @@ test('calls setWord on submit and then hides submit button and disables input', 
   rerender(<MyWord />)
 
   expect(queryByTestId('submit_button')).toBeNull()
-  expect(getByLabelText('Enter word...')).toBeDisabled()
+  expect(getByLabelText(INPUT_LABEL)).toBeDisabled()
 })

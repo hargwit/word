@@ -6,6 +6,8 @@ import { Player } from './player'
 
 import { useMyWord } from '../my-word/my-word-context'
 
+import { INPUT_LABEL } from '../input/constants'
+
 jest.mock('../my-word/my-word-context', () => ({
   useMyWord: jest.fn(() => ({ myWord: '' })),
 }))
@@ -26,14 +28,14 @@ test('displays guesses correctly', () => {
     <Player number={1} />,
   )
 
-  userEvent.type(getByLabelText('Enter word...'), 'word')
+  userEvent.type(getByLabelText(INPUT_LABEL), 'word')
   userEvent.type(getByTestId('letters_input'), '1')
   userEvent.click(getByTestId('submit_button'))
 
   expect(getByText('word')).toBeInTheDocument()
   expect(getByText('1')).toBeInTheDocument()
 
-  userEvent.type(getByLabelText('Enter word...'), 'town')
+  userEvent.type(getByLabelText(INPUT_LABEL), 'town')
   userEvent.type(getByTestId('letters_input'), '2')
   userEvent.click(getByTestId('submit_button'))
 
@@ -50,7 +52,7 @@ test('turns on autocomplete for player 2', () => {
     <Player number={2} />,
   )
 
-  userEvent.type(getByLabelText('Enter word...'), 'word')
+  userEvent.type(getByLabelText(INPUT_LABEL), 'word')
   userEvent.click(getByTestId('submit_button'))
 
   expect(getByText('word')).toBeInTheDocument()

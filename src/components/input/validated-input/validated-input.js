@@ -10,7 +10,7 @@ import {
   anyWarning,
 } from './validation'
 
-import { WARNINGS } from '../constants'
+import { WARNINGS, INPUT_LABEL } from '../constants'
 
 const ValidatedInput = ({
   word,
@@ -52,7 +52,7 @@ const ValidatedInput = ({
   return (
     <TextField
       id='validated_input'
-      label='Enter word...'
+      label={INPUT_LABEL}
       type='text'
       onChange={onUpdate}
       disabled={disabled}

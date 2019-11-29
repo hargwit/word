@@ -7,6 +7,8 @@ import { Guesser } from './guesser'
 
 import { useMyWord } from '../../my-word/my-word-context'
 
+import { INPUT_LABEL } from '../constants'
+
 jest.mock('../../my-word/my-word-context', () => ({
   useMyWord: jest.fn(() => ({ myWord: '' })),
 }))
@@ -16,12 +18,12 @@ test('shows placeholder text and disabled submit button when no word is entered'
     <Guesser addGuess={jest.fn()} />,
   )
 
-  expect(getByLabelText('Enter word...')).toBeInTheDocument()
+  expect(getByLabelText(INPUT_LABEL)).toBeInTheDocument()
   expect(getByTestId('letters_input')).toBeInTheDocument()
   expect(getByTestId('submit_button')).toBeInTheDocument()
   expect(getByTestId('submit_button')).toBeDisabled()
 
-  userEvent.type(getByLabelText('Enter word...'), 'word')
+  userEvent.type(getByLabelText(INPUT_LABEL), 'word')
 
   expect(getByTestId('submit_button')).toBeEnabled()
 })
@@ -31,12 +33,12 @@ test('disables button when warning is present', () => {
     <Guesser addGuess={jest.fn()} />,
   )
 
-  userEvent.type(getByLabelText('Enter word...'), 'wood')
+  userEvent.type(getByLabelText(INPUT_LABEL), 'wood')
 
   expect(getByText('No duplicates')).toBeInTheDocument()
   expect(getByTestId('submit_button')).toBeDisabled()
 
-  userEvent.type(getByLabelText('Enter word...'), 'word')
+  userEvent.type(getByLabelText(INPUT_LABEL), 'word')
   expect(getByTestId('submit_button')).toBeEnabled()
 })
 
@@ -45,7 +47,7 @@ test('user can only enter numbers between 0 and 4', () => {
     <Guesser addGuess={jest.fn()} />,
   )
 
-  userEvent.type(getByLabelText('Enter word...'), 'word')
+  userEvent.type(getByLabelText(INPUT_LABEL), 'word')
 
   userEvent.type(getByTestId('letters_input'), '-1')
   expect(getByText('Must be between 0-4')).toBeInTheDocument()
@@ -83,7 +85,7 @@ test('calls add guess with correct guess format on submit', () => {
     <Guesser addGuess={addGuess} />,
   )
 
-  userEvent.type(getByLabelText('Enter word...'), 'word')
+  userEvent.type(getByLabelText(INPUT_LABEL), 'word')
   userEvent.type(getByTestId('letters_input'), '1')
   userEvent.click(getByTestId('submit_button'))
 
@@ -105,16 +107,16 @@ test('letters is auto-populated and not editable if autocomplete is set to true'
 
   expect(getByTestId('letters_input')).toBeDisabled()
 
-  userEvent.type(getByLabelText('Enter word...'), 'wins')
+  userEvent.type(getByLabelText(INPUT_LABEL), 'wins')
   expect(getByTestId('letters_input')).toHaveValue(1)
 
-  userEvent.type(getByLabelText('Enter word...'), 'wars')
+  userEvent.type(getByLabelText(INPUT_LABEL), 'wars')
   expect(getByTestId('letters_input')).toHaveValue(2)
 
-  userEvent.type(getByLabelText('Enter word...'), 'ward')
+  userEvent.type(getByLabelText(INPUT_LABEL), 'ward')
   expect(getByTestId('letters_input')).toHaveValue(3)
 
-  userEvent.type(getByLabelText('Enter word...'), 'word')
+  userEvent.type(getByLabelText(INPUT_LABEL), 'word')
   expect(getByTestId('letters_input')).toHaveValue(4)
 })
 
@@ -125,15 +127,15 @@ test('clears inputs on submit', () => {
     <Guesser addGuess={addGuess} />,
   )
 
-  userEvent.type(getByLabelText('Enter word...'), 'word')
+  userEvent.type(getByLabelText(INPUT_LABEL), 'word')
   userEvent.type(getByTestId('letters_input'), '3')
 
-  expect(getByLabelText('Enter word...')).toHaveValue('word')
+  expect(getByLabelText(INPUT_LABEL)).toHaveValue('word')
   expect(getByTestId('letters_input')).toHaveValue(3)
 
   userEvent.click(getByTestId('submit_button'))
 
   expect(addGuess).toHaveBeenCalled()
-  expect(getByLabelText('Enter word...')).toHaveValue('')
+  expect(getByLabelText(INPUT_LABEL)).toHaveValue('')
   expect(getByTestId('letters_input')).toHaveValue(0)
 })
