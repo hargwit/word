@@ -30,6 +30,7 @@ const styles = {
     marginLeft: '1rem',
     marginRight: '1rem',
     minWidth: '100px',
+    maxWidth: '100px',
   },
   lettersContainer: {
     display: 'flex',

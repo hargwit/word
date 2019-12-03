@@ -84,6 +84,7 @@ ValidatedInput.propTypes = {
 const styles = {
   input: {
     maxWidth: '90px',
+    minWidth: '90px',
   },
 }
 

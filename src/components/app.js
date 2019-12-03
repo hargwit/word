@@ -15,9 +15,11 @@ const App = () => (
       <div style={styles.content}>
         <Letters />
         <MyWordProvider>
-          <Player number={1} />
-          <Player number={2} />
-          <MyWord />
+          <div style={styles.overflow}>
+            <Player number={1} />
+            <Player number={2} />
+            <MyWord />
+          </div>
         </MyWordProvider>
       </div>
     </div>
@@ -41,6 +43,12 @@ const styles = {
     marginLeft: '1rem',
     marginRight: '1rem',
     marginTop: '2rem',
+  },
+  overflow: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
   },
 }
 

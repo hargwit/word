@@ -58,6 +58,9 @@ const styles = {
     alignItems: 'center',
     marginLeft: '1rem',
     marginRight: '1rem',
+    marginBottom: '2rem',
+    minWidth: '140px',
+    maxWidth: '140px',
   },
   button: {
     maxWidth: '40px',

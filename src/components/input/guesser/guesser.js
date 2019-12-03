@@ -115,6 +115,8 @@ const styles = {
   input: {
     marginLeft: '0.5rem',
     marginRight: '0.5rem',
+    minWidth: '40px',
+    maxWidth: '40px',
   },
 }
 

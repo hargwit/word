@@ -46,6 +46,9 @@ const styles = {
     alignItems: 'center',
     marginLeft: '1rem',
     marginRight: '1rem',
+    marginBottom: '2rem',
+    minWidth: '190px',
+    maxWidth: '190px',
   },
   container: {
     display: 'flex',
