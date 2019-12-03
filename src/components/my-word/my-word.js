@@ -20,7 +20,12 @@ const MyWord = () => {
       <Typography variant='h5'>
         <label htmlFor='my_word_form'>My Word</label>
       </Typography>
-      <form onSubmit={onSubmit} id='my_word_form' style={styles.form}>
+      <form
+        onSubmit={onSubmit}
+        id='my_word_form'
+        autoComplete='off'
+        style={styles.form}
+      >
         <ValidatedInput
           disabled={!!myWord}
           setWord={setLocalWord}

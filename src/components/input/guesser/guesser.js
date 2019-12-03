@@ -62,12 +62,13 @@ const Guesser = ({ addGuess, autocomplete }) => {
         setWord={updateWord}
         setValid={setValid}
         parentWarning={warning}
+        disabled={!myWord}
       />
       <TextField
         type='number'
         onChange={event => updateLetters(event.target.value)}
         value={letters}
-        disabled={autocomplete}
+        disabled={autocomplete || !myWord}
         margin='dense'
         variant='outlined'
         inputProps={{
@@ -82,7 +83,7 @@ const Guesser = ({ addGuess, autocomplete }) => {
         type='submit'
         value='✓'
         data-testid='submit_button'
-        disabled={!word || !valid || !!warning}
+        disabled={!word || !valid || !!warning || !myWord}
         aria-label='Submit guess'
         color='primary'
         variant='contained'

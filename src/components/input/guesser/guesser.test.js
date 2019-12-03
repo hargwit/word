@@ -5,15 +5,16 @@ import userEvent from '@testing-library/user-event'
 
 import { Guesser } from './guesser'
 
-import { useMyWord } from '../../my-word/my-word-context'
-
 import { INPUT_LABEL } from '../constants'
 
-jest.mock('../../my-word/my-word-context', () => ({
-  useMyWord: jest.fn(() => ({ myWord: '' })),
-}))
+import { useMyWord } from '../../my-word/my-word-context'
+jest.mock('../../my-word/my-word-context')
+beforeEach(() => {
+  jest.resetAllMocks()
+})
 
 test('shows placeholder text and disabled submit button when no word is entered', () => {
+  useMyWord.mockReturnValue({ myWord: 'word' })
   const { getByLabelText, getByTestId } = render(
     <Guesser addGuess={jest.fn()} />,
   )
@@ -29,6 +30,7 @@ test('shows placeholder text and disabled submit button when no word is entered'
 })
 
 test('disables button when warning is present', () => {
+  useMyWord.mockReturnValue({ myWord: 'word' })
   const { getByLabelText, getByText, getByTestId } = render(
     <Guesser addGuess={jest.fn()} />,
   )
@@ -43,6 +45,7 @@ test('disables button when warning is present', () => {
 })
 
 test('user can only enter numbers between 0 and 4', () => {
+  useMyWord.mockReturnValue({ myWord: 'word' })
   const { getByLabelText, getByText, getByTestId, queryByText } = render(
     <Guesser addGuess={jest.fn()} />,
   )
@@ -79,6 +82,7 @@ test('user can only enter numbers between 0 and 4', () => {
 })
 
 test('calls add guess with correct guess format on submit', () => {
+  useMyWord.mockReturnValue({ myWord: 'word' })
   const addGuess = jest.fn()
 
   const { getByLabelText, getByTestId } = render(
@@ -99,7 +103,7 @@ test('calls add guess with correct guess format on submit', () => {
 })
 
 test('letters is auto-populated and not editable if autocomplete is set to true', () => {
-  useMyWord.mockImplementation(() => ({ myWord: 'word' }))
+  useMyWord.mockReturnValue({ myWord: 'word' })
 
   const { getByLabelText, getByTestId } = render(
     <Guesser addGuess={jest.fn()} autocomplete />,
@@ -121,6 +125,7 @@ test('letters is auto-populated and not editable if autocomplete is set to true'
 })
 
 test('clears inputs on submit', () => {
+  useMyWord.mockReturnValue({ myWord: 'word' })
   const addGuess = jest.fn()
 
   const { getByLabelText, getByTestId } = render(
@@ -138,4 +143,21 @@ test('clears inputs on submit', () => {
   expect(addGuess).toHaveBeenCalled()
   expect(getByLabelText(INPUT_LABEL)).toHaveValue('')
   expect(getByTestId('letters_input')).toHaveValue(0)
+})
+
+test('inputs are disabled until a global word is set', () => {
+  useMyWord.mockReturnValue({ myWord: '' })
+  const { getByLabelText, getByTestId, rerender } = render(
+    <Guesser addGuess={jest.fn()} />,
+  )
+
+  expect(getByLabelText(INPUT_LABEL)).toBeDisabled()
+  expect(getByTestId('letters_input')).toBeDisabled()
+
+  useMyWord.mockReturnValue({ myWord: 'word' })
+
+  rerender(<Guesser addGuess={jest.fn()} />)
+
+  expect(getByLabelText(INPUT_LABEL)).toBeEnabled()
+  expect(getByTestId('letters_input')).toBeEnabled()
 })
