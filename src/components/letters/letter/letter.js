@@ -68,7 +68,7 @@ const makeStyles = ({ showMenu, rejected, selected }) => ({
     justifyContent: 'flex-start',
     alignItems: 'center',
     borderRadius: 4,
-    backgroundColor: showMenu ? 'rgba(0, 0, 0, 0.1)' : 'white',
+    backgroundColor: showMenu ? 'rgba(0, 0, 0, 0.1)' : '',
     marginTop: 4,
     marginBottom: 4,
   },
