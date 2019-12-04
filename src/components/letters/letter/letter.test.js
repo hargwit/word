@@ -60,8 +60,10 @@ test('toggles color to green and bold on select', () => {
   fireEvent.click(getByText('a'))
   fireEvent.click(getByTestId('select_button'))
 
-  expect(getByText('a')).toHaveStyle(`color: green;`)
-  expect(getByText('a')).toHaveStyle(`font-wight: bold;`)
+  expect(getByText('a')).toHaveStyle(`
+    color: green;
+    font-weight: bold;
+  `)
 
   fireEvent.click(getByText('a'))
   fireEvent.click(getByTestId('select_button'))
