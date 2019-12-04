@@ -4,12 +4,17 @@
 /node_modules
 /.pnp
 .pnp.js
+package-lock.json
 
 # testing
 /coverage
 
 # production
 /build
+
+# Screenshots and videos
+cypress/screenshots
+cypress/videos
 
 # misc
 .DS_Store
