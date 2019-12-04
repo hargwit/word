@@ -12,10 +12,8 @@ const Player = ({ number }) => {
 
   return (
     <div style={styles.root}>
-      <Typography variant='h5'>
-        <label htmlFor={`guesser_${number}`}>Player {number}</label>
-      </Typography>
-      <div id={`guesser_${number}`} style={styles.container}>
+      <Typography variant='h5'>Player {number}</Typography>
+      <div style={styles.container}>
         <div style={styles.guesses}>
           {guesses.map((guess, i) => (
             <div key={`${guess}_${i}`} style={styles.guess}>

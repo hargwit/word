@@ -42,7 +42,8 @@
     "eject": "react-scripts eject",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "cy:reinstall": "cypress cache clear && cypress install"
+    "cy:reinstall": "cypress cache clear && cypress install",
+    "lint": "eslint ."
   },
   "browserslist": {
     "production": [
