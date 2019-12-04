@@ -41,7 +41,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cy:open": "cypress open",
-    "cy:run": "cypress run",
+    "cy:run": "cypress run --record --key 272def5d-344c-47c0-85c4-d40f4a3e444e",
     "cy:reinstall": "cypress cache clear && cypress install",
     "lint": "eslint ."
   },
