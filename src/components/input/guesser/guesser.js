@@ -35,8 +35,8 @@ const Guesser = ({ addGuess, autocomplete }) => {
   }
 
   function lettersInCommon(word1, word2) {
-    return [...word1].reduce((total, letter) => {
-      if (word2.includes(letter)) {
+    return [...word1.toLowerCase()].reduce((total, letter) => {
+      if (word2.toLowerCase().includes(letter)) {
         total++
       }
       return total
