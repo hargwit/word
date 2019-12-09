@@ -124,6 +124,17 @@ test('letters is auto-populated and not editable if autocomplete is set to true'
   expect(getByTestId('letters_input')).toHaveValue(4)
 })
 
+test('letters correctly match irrespective of case', () => {
+  useMyWord.mockReturnValue({ myWord: 'word' })
+
+  const { getByLabelText, getByTestId } = render(
+    <Guesser addGuess={jest.fn()} autocomplete />,
+  )
+
+  userEvent.type(getByLabelText(INPUT_LABEL), 'WoRd')
+  expect(getByTestId('letters_input')).toHaveValue(4)
+})
+
 test('clears inputs on submit', () => {
   useMyWord.mockReturnValue({ myWord: 'word' })
   const addGuess = jest.fn()
