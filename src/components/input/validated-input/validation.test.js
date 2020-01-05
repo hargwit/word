@@ -31,10 +31,13 @@ test('any warning returns true if there is a warning, false if not', () => {
   expect(actual).toBe(expected)
 })
 
-test('hasDuplicates returns true if there is a duplicate', () => {
+test('hasDuplicates returns true if there is a duplicate including across capitals', () => {
   const expected = true
-  const actual = hasDuplicates('wood')
 
+  var actual = hasDuplicates('wood')
+  expect(actual).toBe(expected)
+
+  actual = hasDuplicates('wOod')
   expect(actual).toBe(expected)
 })
 
