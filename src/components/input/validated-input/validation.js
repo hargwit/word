@@ -1,5 +1,5 @@
 function hasDuplicates(word) {
-  const chars = [...word]
+  const chars = [...word.toLowerCase()]
   return chars.reduce((result, char) => {
     return result || chars.indexOf(char) !== chars.lastIndexOf(char)
   }, false)
