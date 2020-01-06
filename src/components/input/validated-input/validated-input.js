@@ -85,6 +85,7 @@ const styles = {
   input: {
     maxWidth: '90px',
     minWidth: '90px',
+    zIndex: 0,
   },
 }
 
