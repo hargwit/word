@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { Modal } from './modal'
 import {
+  IconButton,
   Button,
   Card,
   CardContent,
   Typography,
   CardActions,
 } from '@material-ui/core'
+import HelpIcon from '@material-ui/icons/Help'
 
 const AboutButton = () => {
   const [showModal, setShowModal] = useState(false)
@@ -21,9 +23,9 @@ const AboutButton = () => {
 
   return (
     <>
-      <Button color='inherit' onClick={() => openModal()}>
-        About
-      </Button>
+      <IconButton title='About' color='inherit' onClick={() => openModal()}>
+        <HelpIcon />
+      </IconButton>
       {showModal && (
         <Modal>
           <Card styles={styles.card}>
