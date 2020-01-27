@@ -6,13 +6,17 @@ import userEvent from '@testing-library/user-event'
 import { AboutButton } from './about-button'
 
 test('shows modal with working close button on click', () => {
-  const { getByTestId, queryByTestId, getByText, queryByText } = render(
-    <AboutButton />,
-  )
+  const {
+    getByTestId,
+    queryByTestId,
+    getByText,
+    getByTitle,
+    queryByText,
+  } = render(<AboutButton />)
 
   expect(queryByTestId('modal_root')).toBeNull()
 
-  userEvent.click(getByText('About'))
+  userEvent.click(getByTitle('About'))
 
   expect(getByTestId('modal_root')).toBeInTheDocument()
   expect(getByText('About Word')).toBeInTheDocument()
